@@ -27,7 +27,7 @@
 
     box-sizing:border-box;
     display:block;
-    background:var(--mf-paper);
+    background:transparent; /* the stable body backdrop (cream) shows through; content slides over it */
     color:var(--mf-on-paper);
     font-family:var(--mf-sans);
     font-weight:500;
@@ -102,9 +102,55 @@
     .mface .mf-grid{grid-template-columns:minmax(220px,.42fr) minmax(0,1fr)}
     .mface .mf-meta{order:-1}
   }
+
+  /* FIVE STRINGS, FIVE FACTS */
+  .mface .mf-strings-block{max-width:1180px;margin:clamp(2.6rem,6vw,4rem) auto 0;width:100%}
+  .mface .mf-strings-h{font-family:var(--mf-sans);font-weight:800;letter-spacing:-.02em;
+    font-size:clamp(1.4rem,3.2vw,2.1rem);margin:0}
+  .mface .mf-strings-hint{font-family:var(--mf-mono);font-size:.8rem;color:var(--mf-on-paper-soft);margin:.5rem 0 0}
+  .mface .mf-strings-layout{display:grid;gap:clamp(1.6rem,4vw,2.6rem);margin-top:clamp(1.6rem,3.5vw,2.4rem)}
+
+  /* strings — mobile: horizontal lines stacked */
+  .mface .mf-strings{display:flex;flex-direction:column;gap:clamp(.9rem,3vw,1.3rem)}
+  .mface .mf-str{appearance:none;border:0;background:transparent;cursor:pointer;padding:.35rem 0;margin:0;
+    display:flex;flex-direction:row;align-items:center;gap:.9rem;width:100%}
+  .mface .mf-str-note{font-family:var(--mf-mono);font-size:.82rem;color:var(--mf-on-paper-soft);
+    width:1.4ch;text-align:center;flex:none;transition:color .25s ease}
+  .mface .mf-str-line{flex:1 1 auto;height:2px;width:100%;background:var(--mf-on-paper);border-radius:2px;
+    transform-origin:center;transition:background .25s ease}
+  /* thicker gauges for the lower strings */
+  .mface .mf-str-line[data-g="4"]{height:3px}
+  .mface .mf-str-line[data-g="5"]{height:1.5px}
+  .mface .mf-str:hover .mf-str-note,.mface .mf-str:focus-visible .mf-str-note{color:var(--mf-accent-ink)}
+  .mface .mf-str:hover .mf-str-line{background:var(--mf-accent-ink)}
+  .mface .mf-str[aria-pressed="true"] .mf-str-line{background:var(--mf-accent)}
+  .mface .mf-str[aria-pressed="true"] .mf-str-note{color:var(--mf-accent-deep)}
+  .mface .mf-str:focus-visible{outline:2.5px solid var(--mf-accent-ink);outline-offset:4px;border-radius:4px}
+
+  .mface .mf-fact{min-height:3.5em;display:flex;align-items:center}
+  .mface .mf-fact-text{margin:0;font-size:clamp(1.1rem,2vw,1.4rem);line-height:1.5;color:var(--mf-on-paper);max-width:40ch}
+
+  /* desktop: vertical strings on the left, fact on the right */
+  @media(min-width:640px){
+    .mface .mf-strings-layout{grid-template-columns:auto 1fr;align-items:center;gap:clamp(2.4rem,5vw,4rem)}
+    .mface .mf-strings{flex-direction:row;height:230px;gap:clamp(1.1rem,2.5vw,1.8rem)}
+    .mface .mf-str{flex-direction:column-reverse;height:100%;width:auto;padding:0 .2rem}
+    .mface .mf-str-line{width:2px;height:100%;flex:1 1 auto}
+    .mface .mf-str-line[data-g="4"]{width:3px;height:100%}
+    .mface .mf-str-line[data-g="5"]{width:1.5px;height:100%}
+    .mface .mf-str-note{margin-top:.7rem}
+  }
+
+  /* pluck — damped twang (direction depends on orientation) */
+  @keyframes mf-twangY{0%,100%{transform:translateY(0)}12%{transform:translateY(4px)}30%{transform:translateY(-3px)}48%{transform:translateY(2px)}66%{transform:translateY(-1.2px)}84%{transform:translateY(.6px)}}
+  @keyframes mf-twangX{0%,100%{transform:translateX(0)}12%{transform:translateX(4px)}30%{transform:translateX(-3px)}48%{transform:translateX(2px)}66%{transform:translateX(-1.2px)}84%{transform:translateX(.6px)}}
+  .mface .mf-str-line.mf-twang{animation:mf-twangY .55s ease-out}
+  @media(min-width:640px){ .mface .mf-str-line.mf-twang{animation-name:mf-twangX} }
+
   @media(prefers-reduced-motion:reduce){
     .mface .mf-neckgroup{transition:none}
     .mface .mf-cta{transition:none}
+    .mface .mf-str-line.mf-twang{animation:none}
   }
   </style>
 
@@ -248,11 +294,51 @@
     </aside>
   </div>
 
+  <!-- FIVE STRINGS, FIVE FACTS — pluck a string to reveal a fact -->
+  <section class="mf-strings-block" aria-labelledby="mf-strings-h">
+    <h3 class="mf-strings-h" id="mf-strings-h">Five strings, five facts</h3>
+    <p class="mf-strings-hint">Pluck a string.</p>
+    <div class="mf-strings-layout">
+      <div class="mf-strings" role="group" aria-label="Five banjo strings — pluck one to reveal a fact">
+        <button class="mf-str" type="button" data-i="0" aria-pressed="false" aria-label="String 1, D — reveal a fact"><span class="mf-str-line" data-g="1"></span><span class="mf-str-note">D</span></button>
+        <button class="mf-str" type="button" data-i="1" aria-pressed="false" aria-label="String 2, B — reveal a fact"><span class="mf-str-line" data-g="2"></span><span class="mf-str-note">B</span></button>
+        <button class="mf-str" type="button" data-i="2" aria-pressed="false" aria-label="String 3, G — reveal a fact"><span class="mf-str-line" data-g="3"></span><span class="mf-str-note">G</span></button>
+        <button class="mf-str" type="button" data-i="3" aria-pressed="false" aria-label="String 4, D — reveal a fact"><span class="mf-str-line" data-g="4"></span><span class="mf-str-note">D</span></button>
+        <button class="mf-str" type="button" data-i="4" aria-pressed="false" aria-label="String 5, g — reveal a fact"><span class="mf-str-line" data-g="5"></span><span class="mf-str-note">g</span></button>
+      </div>
+      <div class="mf-fact">
+        <p class="mf-fact-text" aria-live="polite">Pluck a string to hear a little about my playing.</p>
+      </div>
+    </div>
+  </section>
+
   <script is:inline>
   (function(){
     var root = document.querySelector('.mface');
     if (!root || root.dataset.mfInit) return;
     root.dataset.mfInit = '1';
+
+    // ---- five strings, five facts (pluck a string → reveal a fact) ----
+    // PLACEHOLDER facts grounded in what's known — Alexey to confirm / replace with his 5.
+    var strEls = [].slice.call(root.querySelectorAll('.mf-str'));
+    var factEl = root.querySelector('.mf-fact-text');
+    var FACTS = [
+      'Five-string bluegrass banjo — rolls, drives, Scruggs style.',
+      'Right-handed by birth; now I play it left-handed.',
+      'Rebuilt my playing from zero after focal dystonia.',
+      'Home base: open-G tuning (g D G B D).',
+      'Still at it — most days, one roll at a time.'
+    ];
+    strEls.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = parseInt(btn.getAttribute('data-i'), 10) || 0;
+        strEls.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        btn.setAttribute('aria-pressed', 'true');
+        var line = btn.querySelector('.mf-str-line');
+        if (line) { line.classList.remove('mf-twang'); void line.offsetWidth; line.classList.add('mf-twang'); }
+        if (factEl && FACTS[i]) { factEl.textContent = FACTS[i]; }
+      });
+    });
 
     var fb  = root.querySelector('.mf-fretboard');
     var bR  = root.querySelector('.mf-hand-right');
@@ -273,5 +359,11 @@
   })();
   </script>
 </section>
+  <footer class="mfoot">
+    <div class="mfoot-wrap">
+      <span>chudinov.info</span>
+      <span>soul.02 — music</span>
+    </div>
+  </footer>
 </div>
 <!-- end music face -->

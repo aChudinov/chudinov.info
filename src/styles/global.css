@@ -1,6 +1,12 @@
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:#eef0f3;color:#15171c;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden}
+/* html is the stable backdrop: it stays put and color-morphs between the two worlds
+   (like the header), while the content slides over it. Driven by data-side; an inline
+   head script sets it before first paint to avoid a flash. */
+html{background:#eef0f3;transition:background-color .55s ease}
+html[data-side="music"]{background:#efe7d6}
+@media (prefers-reduced-motion:reduce){ html{transition:none} }
+body{color:#15171c;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden}
 body.is-flipping{overflow:hidden;height:100vh}
 
 /* ---------- stage / persistent header / slider ---------- */
@@ -69,7 +75,11 @@ html{scroll-padding-top:var(--topbar-h)}
 }
 
 /* ---------- music face wrapper (outside .mface) ---------- */
-.face--music{background:#efe7d6}
+.face--music{background:transparent}
+/* music-side footer (mirrors the IT footer, in the warm world) */
+.face--music .mfoot{padding:clamp(2rem,4vw,3rem) clamp(1.5rem,5vw,4rem);border-top:1px solid rgba(20,18,16,.12)}
+.face--music .mfoot-wrap{max-width:1180px;margin-inline:auto;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:.76rem;color:#5c5343;letter-spacing:.03em}
 .mbar{
   position:sticky;top:0;z-index:20;display:flex;justify-content:flex-end;align-items:center;
   padding:clamp(1rem,3vw,1.4rem) clamp(1.25rem,5vw,3.5rem);

@@ -21,6 +21,18 @@ const description =
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <!-- set the backdrop side before first paint, so the page opens in the right world with no flash -->
+    <script is:inline>
+      (function () {
+        try {
+          var h = (location.hash || '').replace('#', '');
+          var s = (h === 'builder' || h === 'music') ? h : (localStorage.getItem('chudinov-side') || 'builder');
+          document.documentElement.dataset.side = s;
+        } catch (e) {
+          document.documentElement.dataset.side = 'builder';
+        }
+      })();
+    </script>
   </head>
   <body>
     <slot />

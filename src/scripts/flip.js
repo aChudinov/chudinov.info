@@ -29,13 +29,14 @@
       b.setAttribute('aria-pressed', side==='music' ? 'true':'false');
       b.setAttribute('aria-label', side==='builder'
         ? 'Flip to the music side'
-        : 'Flip to the builder side');
+        : 'Flip to the IT side');
     });
   }
 
   // header/brand/title/switches follow the active side (the header itself never moves)
   function updateChrome(side){
     stage.dataset.side=side;
+    document.documentElement.dataset.side=side;   // stable backdrop color-morphs in place
     if(topbar) topbar.dataset.side=side;
     if(soulLabel) soulLabel.textContent = side==='music' ? '/ soul.02' : '/ soul.01';
     document.title=TITLES[side];
