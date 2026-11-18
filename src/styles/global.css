@@ -1,0 +1,81 @@
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#eef0f3;color:#15171c;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden}
+body.is-flipping{overflow:hidden;height:100vh}
+
+/* ---------- stage / persistent header / slider ---------- */
+:root{--topbar-h:58px}
+html{scroll-padding-top:var(--topbar-h)}
+.stage{position:relative;min-height:100vh;display:flex;flex-direction:column}
+
+/* persistent header — stays put; content slides beneath it */
+.topbar{
+  position:sticky;top:0;z-index:200;flex:none;
+  transition:background .5s ease,border-color .5s ease,color .5s ease;
+  background:color-mix(in srgb,#eef0f3 86%,transparent);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(21,23,28,.07);color:#565d6b;
+}
+.topbar .wrap{max-width:1080px;margin-inline:auto;width:100%;
+  padding:.85rem clamp(1.25rem,5vw,3.5rem);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.topbar .brand{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:.78rem;letter-spacing:.04em}
+.topbar .brand b{font-weight:600;color:#15171c;transition:color .5s ease}
+.topbar .brand .soul{transition:color .5s ease}
+/* music theme for the shared header */
+.topbar[data-side="music"]{background:color-mix(in srgb,#efe7d6 85%,transparent);border-bottom-color:rgba(20,18,16,.14);color:#a4917a}
+.topbar[data-side="music"] .brand b{color:#141210}
+.topbar[data-side="music"] .flip{--flip-dim:#a4917a;--flip-on:#141210;--flip-track:#e2d6bd;--flip-trackb:#cebf9f;--kn:#141210;--flip-focus:#8a5a10}
+
+/* slider holds the two content faces */
+.slider{position:relative;flex:1 0 auto}
+.slider.is-flipping{position:fixed;left:0;right:0;bottom:0;overflow:hidden;z-index:100} /* top set inline = header height */
+.face.is-active{position:relative}
+.face.is-hidden{display:none}
+
+/* ---------- the flip switch (shared control) ---------- */
+.flip{
+  --kn:#15171c;
+  display:inline-flex;align-items:center;gap:.7rem;
+  appearance:none;border:0;background:transparent;cursor:pointer;
+  padding:.45rem .55rem;border-radius:999px;
+  font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  -webkit-tap-highlight-color:transparent;
+}
+.flip__end{font-weight:600;color:var(--flip-dim,#5e6472);transition:color .35s ease;user-select:none}
+.flip[data-side="builder"] .flip__end--l{color:var(--flip-on,#15171c)}
+.flip[data-side="music"]   .flip__end--r{color:var(--flip-on,#15171c)}
+.flip__track{
+  position:relative;width:60px;height:28px;border-radius:999px;
+  background:var(--flip-track,#dbdee4);
+  border:1.5px solid var(--flip-trackb,#c2c7d0);
+  box-shadow:inset 0 2px 5px rgba(15,17,22,.14);
+  flex:none;transition:background .35s ease,border-color .35s ease;
+}
+.flip__knob{
+  position:absolute;top:50%;left:3px;width:20px;height:20px;border-radius:50%;
+  background:var(--kn);
+  box-shadow:0 2px 4px rgba(15,17,22,.4),0 0 0 1px rgba(255,255,255,.12) inset;
+  transform:translate(0,-50%);
+  transition:transform .6s cubic-bezier(.16,1,.3,1),background .35s ease;
+}
+.flip[data-side="music"] .flip__knob{transform:translate(32px,-50%)}
+.flip:active .flip__knob{width:24px}           /* tactile squish */
+.flip:focus-visible{outline:none}
+.flip:focus-visible .flip__track{outline:2.5px solid var(--flip-focus,#2743d6);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .flip__knob,.flip__end,.flip__track{transition:none}
+}
+
+/* ---------- music face wrapper (outside .mface) ---------- */
+.face--music{background:#efe7d6}
+.mbar{
+  position:sticky;top:0;z-index:20;display:flex;justify-content:flex-end;align-items:center;
+  padding:clamp(1rem,3vw,1.4rem) clamp(1.25rem,5vw,3.5rem);
+  background:color-mix(in srgb,#efe7d6 85%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(20,18,16,.12);
+}
+/* theme the shared switch to the warm music world */
+.mbar .flip{--flip-dim:#a4917a;--flip-on:#141210;--flip-track:#e2d6bd;--flip-trackb:#cebf9f;--kn:#141210;--flip-focus:#8a5a10}

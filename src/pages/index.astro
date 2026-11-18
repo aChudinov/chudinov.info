@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import TopBar from '../components/TopBar.astro';
+import BuilderFace from '../components/BuilderFace.astro';
+import MusicFace from '../components/MusicFace.astro';
+---
+
+<Base>
+  <div class="stage" id="stage" data-side="builder">
+    <TopBar />
+    <div class="slider" id="slider">
+      <BuilderFace />
+      <MusicFace />
+    </div>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/flip.js';
+</script>

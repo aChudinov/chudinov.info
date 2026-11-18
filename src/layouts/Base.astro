@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+
+const title = 'Alexey Chudinov — full-stack AI architect';
+const description =
+  'Alexey Chudinov — full-stack AI architect in Prague, and a 5-string bluegrass banjo player relearning the instrument left-handed.';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#eef0f3" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chudinov.info/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

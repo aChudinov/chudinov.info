@@ -1,0 +1,27 @@
+# dependencies & build output
+node_modules/
+dist/
+.astro/
+
+# exploration scratch (kept locally, not part of the real site)
+assets/
+variants/
+r2/
+scratch-photos/
+dist-shots/
+shots/
+BRIEF.md
+
+# tooling
+.taste-skill/
+.impeccable/
+.claude/
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp
