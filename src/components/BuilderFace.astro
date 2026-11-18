@@ -16,7 +16,7 @@
               <a class="btn btn--ghost" href="https://www.linkedin.com/in/alexeychudinov/" target="_blank" rel="noopener">LinkedIn</a>
             </div>
           </div>
-          <div class="term anim-in" role="img" aria-label="Terminal: whoami prints 'alexey chudinov — ai architect'; the stack reads front-end to node.js to ai systems, with agents, retrieval, guardrails and evals; then a command ships the whole machine to production.">
+          <div class="term anim-in" aria-label="Interactive terminal">
             <div class="term-bar">
               <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
               <span class="term-title">alexey@chudinov — zsh</span>
@@ -26,8 +26,14 @@
               <div class="tln out">alexey chudinov — ai architect</div>
               <div class="tln sp"><span class="pr">$</span> cat stack.txt</div>
               <div class="tln out">front-end → node.js → ai systems</div>
-              <div class="tln out">agents · retrieval · guardrails · evals</div>
-              <div class="tln sp"><span class="pr">$</span> ./ship --target prod<span class="caret"></span></div>
+              <div class="tln sp"><span class="pr">$</span> why are you here?</div>
+              <div class="tln term-menu" role="group" aria-label="Why are you here? Pick one.">
+                <button type="button" class="tmi" data-k="hire" aria-pressed="false"><span class="tk">[1]</span> hire</button>
+                <button type="button" class="tmi" data-k="collab" aria-pressed="false"><span class="tk">[2]</span> collab</button>
+                <button type="button" class="tmi" data-k="curious" aria-pressed="false"><span class="tk">[3]</span> curious</button>
+                <button type="button" class="tmi" data-k="banjo" aria-pressed="false"><span class="tk">[4]</span> banjo</button>
+              </div>
+              <div class="tln term-out" aria-live="polite"><span class="caret"></span></div>
             </div>
           </div>
         </div>
@@ -183,6 +189,15 @@
     margin-left:.25ch;vertical-align:-2px;animation:tcaret 1.05s steps(1) infinite}
   @keyframes tcaret{50%{opacity:0}}
   @media (prefers-reduced-motion:reduce){ .bface .term-body .caret{animation:none} }
+  /* interactive prompt selector */
+  .bface .term-menu{display:flex;flex-wrap:wrap;gap:.25rem 1rem;white-space:normal;margin-top:.15rem}
+  .bface .tmi{appearance:none;background:transparent;border:0;cursor:pointer;font:inherit;color:#c9ced8;padding:.1rem .1rem;border-radius:3px;transition:color .15s ease}
+  .bface .tmi .tk{color:#57d08a;margin-right:.1ch}
+  .bface .tmi:hover,.bface .tmi[aria-pressed="true"]{color:#fff}
+  .bface .tmi:hover .tk,.bface .tmi[aria-pressed="true"] .tk{color:#7ee6a6}
+  .bface .tmi:focus-visible{outline:2px solid #57d08a;outline-offset:2px}
+  .bface .term-out{color:#8b93a3;min-height:1.5em;margin-top:.35rem;white-space:normal}
+  .bface .term-out .ok{color:#8fe3b2}
   .bface .eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
     color:var(--accent);margin:0 0 1.4rem}
   .bface h1{

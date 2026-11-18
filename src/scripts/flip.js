@@ -23,6 +23,10 @@
   function store(side){ try{ localStorage.setItem(KEY, side); }catch(e){} }
   function read(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
 
+  // URL reflects the side: #it / #music (internal side keys stay builder/music)
+  function hashFor(side){ return side==='music' ? 'music' : 'it'; }
+  function updateHash(side){ try{ history.replaceState(null, '', '#'+hashFor(side)); }catch(e){} }
+
   function syncSwitches(side){
     switches.forEach(function(b){
       b.dataset.side=side;                       // drives knob + label emphasis
@@ -68,6 +72,7 @@
     if(animating) return;
     var current=stage.dataset.side, next=other(current);
     store(next);
+    updateHash(next);
 
     if(reduced()){
       setResting(next);
@@ -141,11 +146,15 @@
 
   // ---- initial side: hash wins over localStorage, no animation ----
   function hashSide(){
-    var h=(location.hash||'').replace('#','');
-    return (h==='builder'||h==='music') ? h : null;
+    var h=(location.hash||'').replace('#','').toLowerCase();
+    if(h==='music') return 'music';
+    if(h==='it'||h==='builder') return 'builder';
+    return null;
   }
+  // direct URL (#it/#music) wins; otherwise the last-visited side; otherwise IT
   var initial = hashSide() || read() || 'builder';
   setResting(initial);
+  updateHash(initial);   // reflect the resolved side in the URL on load
   window.scrollTo(0,0);
 
   // react to hash changes (deep-link navigation) without animation

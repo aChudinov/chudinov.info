@@ -97,3 +97,54 @@
       .finally(function () { if (button) button.disabled = false; });
   });
 })();
+
+// ---- hero terminal: "why are you here?" selector ----
+(function () {
+  var menu = document.querySelector('.term-menu');
+  var out = document.querySelector('.term-out');
+  if (!menu || !out) return;
+  var items = [].slice.call(menu.querySelectorAll('.tmi'));
+  var RESP = {
+    hire:    'open to the right role — say hello below ↓',
+    collab:  'love a good problem — the form is just below ↓',
+    curious: 'make yourself at home. scroll on ↓',
+    banjo:   'wrong soul — hit MUSIC, top-right ♪'
+  };
+
+  function render(text) {
+    out.textContent = '';
+    var ok = document.createElement('span');
+    ok.className = 'ok';
+    ok.textContent = '→ ' + text;
+    var caret = document.createElement('span');
+    caret.className = 'caret';
+    out.appendChild(ok);
+    out.appendChild(document.createTextNode(' '));
+    out.appendChild(caret);
+  }
+
+  function pick(btn) {
+    var k = btn.getAttribute('data-k');
+    items.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    btn.setAttribute('aria-pressed', 'true');
+    render(RESP[k] || ''); // just prints — no scrolling or navigation
+  }
+  items.forEach(function (b) { b.addEventListener('click', function () { pick(b); }); });
+})();
+
+// ---- in-page anchors (e.g. "Say hello" → #contact) scroll smoothly and
+//      do NOT overwrite the #it / #music side in the URL ----
+(function () {
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (!id || id === 'it' || id === 'music' || id === 'builder') return; // side links: leave alone
+    var t = document.getElementById(id);
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+})();
