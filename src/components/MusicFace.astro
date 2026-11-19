@@ -1,15 +1,15 @@
 ---
-// Music face: the mface fragment, verbatim. CSS and JS are self-scoped under
-// the mface class and kept inline so Astro leaves them untouched, exactly like
-// the original embedded fragment. Fretboard defaults to LEFT.
+// Music face: the mface fragment, verbatim-scoped under .mface (inline CSS/JS so
+// Astro leaves it untouched). The 5 strings are the page MENU; each plucks to a
+// fact. A generic intro shows by default. The fretboard+tab is one fact ("the
+// neck"); other facts use distinct non-musical presentations (placeholders for now).
 ---
 
 <div class="face face--music is-hidden" data-face="music" inert>
-<!-- MUSIC FACE — embed this whole fragment inside a container. Self-scoped CSS/JS under .mface. Fretboard defaults to LEFT. -->
+<!-- MUSIC FACE — self-scoped CSS/JS under .mface. Strings = menu. Fretboard defaults to LEFT. -->
 <section class="mface" aria-label="Alexey Chudinov — musician">
   <style is:inline>
   .mface{
-    /* scoped palette — warm cream, from V4 */
     --mf-ink:#141210;
     --mf-paper:#efe7d6;
     --mf-paper-2:#e7dcc4;
@@ -20,39 +20,88 @@
     --mf-on-paper:#141210;
     --mf-on-paper-soft:#5c5343;
     --mf-on-ink:#f2ead9;
-    --mf-rule-paper:rgba(20,18,16,.14);
     --mf-mono:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
     --mf-sans:system-ui,-apple-system,'Segoe UI',sans-serif;
     --mf-ease:cubic-bezier(.16,1,.3,1);
-
-    box-sizing:border-box;
-    display:block;
-    background:transparent; /* the stable body backdrop (cream) shows through; content slides over it */
-    color:var(--mf-on-paper);
-    font-family:var(--mf-sans);
-    font-weight:500;
-    line-height:1.5;
-    padding:clamp(1.5rem,5vw,4rem);
+    box-sizing:border-box;display:block;background:transparent;color:var(--mf-on-paper);
+    font-family:var(--mf-sans);font-weight:500;line-height:1.5;padding:clamp(1.5rem,5vw,4rem);
   }
   .mface *,.mface *::before,.mface *::after{box-sizing:border-box}
   .mface :focus-visible{outline:2.5px solid var(--mf-accent-ink);outline-offset:3px;border-radius:2px}
-
-  .mface .mf-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2rem,4vw,3.2rem);max-width:1180px;margin-inline:auto;width:100%}
+  .mface .mf-wrap{max-width:1180px;margin-inline:auto;width:100%}
 
   .mface .mf-title{font-weight:900;letter-spacing:-.035em;line-height:.95;margin:0;font-size:clamp(2.2rem,6.5vw,4.6rem)}
   .mface .mf-title .mf-amp{color:var(--mf-accent-ink)}
   .mface .mf-lede{max-width:56ch;margin:1.4rem 0 0;font-size:clamp(1.05rem,1.5vw,1.28rem);line-height:1.62}
   .mface .mf-lede .mf-hl{color:var(--mf-accent-ink);font-weight:700}
 
-  /* panels: tablature + fretboard */
-  .mface .mf-score{margin-top:clamp(2rem,4vw,3rem);display:grid;gap:clamp(1.4rem,3vw,2.2rem)}
+  /* ---- the banjo instrument = the page menu ---- */
+  /* desktop: instrument on the left, fact content on the right; mobile: instrument hero on top, content below */
+  .mface .mf-body{display:grid;gap:clamp(2rem,5vw,3rem);margin-top:clamp(2.2rem,5vw,3.2rem)}
+  @media(min-width:760px){
+    .mface .mf-body{grid-template-columns:auto minmax(0,1fr);align-items:start;gap:clamp(2.5rem,5vw,4.5rem)}
+    .mface .mf-stage{margin-top:0}
+  }
+  .mface .mf-menu-hint{font-family:var(--mf-mono);font-size:.78rem;color:var(--mf-on-paper-soft);margin:0 0 1.2rem}
+
+  /* stage = the cream drum head the string assembly sits on */
+  /* the instrument sits directly on the cream world — no panel */
+  /* viewBox is cropped tight to the banjo (80 44 240 636), so sizing is height-driven
+     and the instrument itself stays the same size — just without the empty margins */
+  .mface .mf-instr{position:relative;margin-inline:auto;aspect-ratio:240/636;height:clamp(520px,68vh,760px);width:auto}
+  .mface .mf-instr-svg{display:block;width:100%;height:100%}
+  .mface .mf-istring{cursor:pointer}
+  .mface .mf-istring .mf-iwire{transition:stroke .2s ease}
+  .mface .mf-istring:hover .mf-iwire,.mface .mf-istring[aria-pressed="true"] .mf-iwire{stroke:var(--mf-accent)}
+  .mface .mf-istring:focus-visible .mf-iwire{stroke:var(--mf-accent-ink)}
+  /* no box outline on the string button — the wire colour is the focus/press cue */
+  .mface .mf-istring:focus{outline:none}
+
+  /* mobile: the banjo becomes a near-full-screen vertical hero at the top */
+  @media(max-width:759px){
+    .mface .mf-instr{height:min(82vh,640px);width:auto;max-width:94vw}
+    .mface .mf-menu-hint{text-align:center}
+  }
+
+  /* ---- fact stage ---- */
+  .mface .mf-stage{margin-top:clamp(2.2rem,5vw,3.2rem);min-height:clamp(200px,30vh,300px)}
+  .mface .mf-fp[hidden]{display:none}
+  .mface .mf-fp{animation:mf-fade .4s ease}
+  @keyframes mf-fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .mface .mf-fp-h{font-family:var(--mf-mono);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mf-accent-ink);margin:0 0 1.1rem}
+  .mface .mf-hint{font-family:var(--mf-mono);font-size:.8rem;color:var(--mf-on-paper-soft);margin:1.4rem 0 0}
+
+  /* fact: stat */
+  .mface .mf-stat{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+  .mface .mf-stat-num{font-weight:900;font-size:clamp(3rem,11vw,6rem);line-height:.85;letter-spacing:-.04em}
+  .mface .mf-stat-unit{font-family:var(--mf-mono);font-size:1.05rem;color:var(--mf-accent-deep)}
+  .mface .mf-stat-label{margin:1rem 0 0;font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--mf-on-paper-soft);max-width:40ch}
+
+  /* fact: progress */
+  .mface .mf-bar2{height:12px;background:var(--mf-paper-2);border:1px solid var(--mf-paper-line);border-radius:999px;overflow:hidden;max-width:440px}
+  .mface .mf-bar2-fill{height:100%;background:var(--mf-accent);border-radius:999px}
+  .mface .mf-fp-sub{margin:1rem 0 0;color:var(--mf-on-paper-soft);max-width:44ch}
+
+  /* fact: terminal line (one dark moment in the warm world) */
+  .mface .mf-term{font-family:var(--mf-mono);font-size:.88rem;background:var(--mf-ink);color:var(--mf-on-ink);
+    border-radius:9px;padding:1.2rem 1.3rem;line-height:1.9;overflow-x:auto;box-shadow:0 24px 44px -32px rgba(20,18,16,.5)}
+  .mface .mf-term .mf-pr{color:var(--mf-accent)}
+  .mface .mf-term .mf-dim{color:#a99;opacity:.8}
+
+  /* fact: tags */
+  .mface .mf-tags{display:flex;flex-wrap:wrap;gap:.6rem}
+  .mface .mf-chip{font-family:var(--mf-mono);font-size:.82rem;padding:.42rem .85rem;border:1.5px solid var(--mf-on-paper);
+    border-radius:999px;color:var(--mf-on-paper);transition:background .2s ease,color .2s ease}
+  .mface .mf-chip:hover{background:var(--mf-on-paper);color:var(--mf-paper)}
+
+  /* fact: the neck (tablature + fretboard) */
+  .mface .mf-score{display:grid;gap:clamp(1.4rem,3vw,2.2rem)}
   .mface .mf-panel{background:var(--mf-paper-2);border:1px solid var(--mf-paper-line);border-radius:9px;
     padding:clamp(1rem,2.2vw,1.6rem);box-shadow:0 24px 44px -32px rgba(20,18,16,.5)}
   .mface .mf-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;
     font-family:var(--mf-mono);font-size:.8rem;color:var(--mf-on-paper-soft);margin-bottom:.9rem}
   .mface .mf-bar .mf-pl{color:var(--mf-on-paper);font-weight:500}
   .mface .mf-bar .mf-pt{color:var(--mf-accent-deep)}
-
   .mface .mf-tab,.mface .mf-fret{display:block;width:100%;height:auto}
   .mface .mf-tab .mf-staff{stroke:var(--mf-on-paper-soft);stroke-width:1;opacity:.55}
   .mface .mf-tab .mf-barline{stroke:var(--mf-on-paper);stroke-width:1.4}
@@ -60,12 +109,9 @@
   .mface .mf-tab .mf-slab{fill:var(--mf-paper-2)}
   .mface .mf-tab .mf-clef{font-family:var(--mf-mono);font-size:13px;font-weight:700;fill:var(--mf-accent-ink);letter-spacing:1px}
   .mface .mf-tab .mf-sname{font-family:var(--mf-mono);font-size:12px;fill:var(--mf-on-paper-soft)}
-
-  /* fretboard */
   .mface .mf-fbhead{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem}
   .mface .mf-seg{display:inline-flex;border:1.5px solid var(--mf-on-paper);border-radius:4px;overflow:hidden;font-family:var(--mf-mono);font-size:.8rem}
-  .mface .mf-seg button{appearance:none;border:0;background:transparent;color:var(--mf-on-paper);
-    padding:.5rem .95rem;cursor:pointer;font:inherit;letter-spacing:.02em}
+  .mface .mf-seg button{appearance:none;border:0;background:transparent;color:var(--mf-on-paper);padding:.5rem .95rem;cursor:pointer;font:inherit;letter-spacing:.02em}
   .mface .mf-seg button[aria-pressed="true"]{background:var(--mf-ink);color:var(--mf-on-ink)}
   .mface .mf-seg button+button{border-left:1.5px solid var(--mf-on-paper)}
   .mface .mf-neck{stroke:none;fill:var(--mf-paper)}
@@ -83,234 +129,181 @@
   .mface .mf-fbcaption b{color:var(--mf-accent-deep);font-weight:500}
   .mface .mf-fname-side{font-family:var(--mf-mono);font-size:12px;fill:var(--mf-on-paper-soft)}
 
-  /* cta + meta */
-  .mface .mf-cta-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:clamp(1.6rem,3vw,2.2rem)}
-  .mface .mf-cta{display:inline-flex;align-items:center;gap:.7rem;
-    font-family:var(--mf-mono);font-size:.84rem;font-weight:500;letter-spacing:.01em;
-    text-decoration:none;padding:.95rem 1.35rem;border:1.5px solid var(--mf-ink);
-    background:transparent;color:var(--mf-ink);border-radius:3px;
-    transition:transform .35s var(--mf-ease),background .35s var(--mf-ease),color .35s var(--mf-ease)}
-  .mface .mf-cta .mf-gl{color:var(--mf-accent-ink);font-weight:700}
-  .mface .mf-cta:hover{transform:translateY(-3px);background:var(--mf-ink);color:var(--mf-on-ink)}
-  .mface .mf-cta:hover .mf-gl{color:var(--mf-accent)}
-
-  .mface .mf-meta{display:flex;flex-direction:column;gap:.5rem}
-  .mface .mf-note{font-family:var(--mf-mono);font-size:.8rem;letter-spacing:.03em;color:var(--mf-on-paper-soft);margin:0}
-  .mface .mf-note .mf-amp{color:var(--mf-accent-ink)}
-
-  @media(min-width:900px){
-    .mface .mf-grid{grid-template-columns:minmax(220px,.42fr) minmax(0,1fr)}
-    .mface .mf-meta{order:-1}
-  }
-
-  /* FIVE STRINGS, FIVE FACTS */
-  .mface .mf-strings-block{max-width:1180px;margin:clamp(2.6rem,6vw,4rem) auto 0;width:100%}
-  .mface .mf-strings-h{font-family:var(--mf-sans);font-weight:800;letter-spacing:-.02em;
-    font-size:clamp(1.4rem,3.2vw,2.1rem);margin:0}
-  .mface .mf-strings-hint{font-family:var(--mf-mono);font-size:.8rem;color:var(--mf-on-paper-soft);margin:.5rem 0 0}
-  .mface .mf-strings-layout{display:grid;gap:clamp(1.6rem,4vw,2.6rem);margin-top:clamp(1.6rem,3.5vw,2.4rem)}
-
-  /* strings — mobile: horizontal lines stacked */
-  .mface .mf-strings{display:flex;flex-direction:column;gap:clamp(.9rem,3vw,1.3rem)}
-  .mface .mf-str{appearance:none;border:0;background:transparent;cursor:pointer;padding:.35rem 0;margin:0;
-    display:flex;flex-direction:row;align-items:center;gap:.9rem;width:100%}
-  .mface .mf-str-note{font-family:var(--mf-mono);font-size:.82rem;color:var(--mf-on-paper-soft);
-    width:1.4ch;text-align:center;flex:none;transition:color .25s ease}
-  .mface .mf-str-line{flex:1 1 auto;height:2px;width:100%;background:var(--mf-on-paper);border-radius:2px;
-    transform-origin:center;transition:background .25s ease}
-  /* thicker gauges for the lower strings */
-  .mface .mf-str-line[data-g="4"]{height:3px}
-  .mface .mf-str-line[data-g="5"]{height:1.5px}
-  .mface .mf-str:hover .mf-str-note,.mface .mf-str:focus-visible .mf-str-note{color:var(--mf-accent-ink)}
-  .mface .mf-str:hover .mf-str-line{background:var(--mf-accent-ink)}
-  .mface .mf-str[aria-pressed="true"] .mf-str-line{background:var(--mf-accent)}
-  .mface .mf-str[aria-pressed="true"] .mf-str-note{color:var(--mf-accent-deep)}
-  .mface .mf-str:focus-visible{outline:2.5px solid var(--mf-accent-ink);outline-offset:4px;border-radius:4px}
-
-  .mface .mf-fact{min-height:3.5em;display:flex;align-items:center}
-  .mface .mf-fact-text{margin:0;font-size:clamp(1.1rem,2vw,1.4rem);line-height:1.5;color:var(--mf-on-paper);max-width:40ch}
-
-  /* desktop: vertical strings on the left, fact on the right */
-  @media(min-width:640px){
-    .mface .mf-strings-layout{grid-template-columns:auto 1fr;align-items:center;gap:clamp(2.4rem,5vw,4rem)}
-    .mface .mf-strings{flex-direction:row;height:230px;gap:clamp(1.1rem,2.5vw,1.8rem)}
-    .mface .mf-str{flex-direction:column-reverse;height:100%;width:auto;padding:0 .2rem}
-    .mface .mf-str-line{width:2px;height:100%;flex:1 1 auto}
-    .mface .mf-str-line[data-g="4"]{width:3px;height:100%}
-    .mface .mf-str-line[data-g="5"]{width:1.5px;height:100%}
-    .mface .mf-str-note{margin-top:.7rem}
-  }
-
-  /* pluck — damped twang (direction depends on orientation) */
-  @keyframes mf-twangY{0%,100%{transform:translateY(0)}12%{transform:translateY(4px)}30%{transform:translateY(-3px)}48%{transform:translateY(2px)}66%{transform:translateY(-1.2px)}84%{transform:translateY(.6px)}}
-  @keyframes mf-twangX{0%,100%{transform:translateX(0)}12%{transform:translateX(4px)}30%{transform:translateX(-3px)}48%{transform:translateX(2px)}66%{transform:translateX(-1.2px)}84%{transform:translateX(.6px)}}
-  .mface .mf-str-line.mf-twang{animation:mf-twangY .55s ease-out}
-  @media(min-width:640px){ .mface .mf-str-line.mf-twang{animation-name:mf-twangX} }
-
   @media(prefers-reduced-motion:reduce){
     .mface .mf-neckgroup{transition:none}
-    .mface .mf-cta{transition:none}
-    .mface .mf-str-line.mf-twang{animation:none}
+    .mface .mf-fp{animation:none}
   }
   </style>
 
-  <div class="mf-grid">
-    <div>
-      <h2 class="mf-title">The musician<span class="mf-amp">.</span></h2>
-      <p class="mf-lede">
-        Right-handed, until <span class="mf-hl">focal dystonia</span> closed that hand on the strings.
-        So I turned the banjo over and started again, left-handed — new hand, same tunes,
-        slower and truer. The relearning isn't a footnote. It <span class="mf-hl">is</span> the music now.
-      </p>
+  <div class="mf-wrap">
+    <h2 class="mf-title">The musician<span class="mf-amp">.</span></h2>
 
-      <div class="mf-score">
-        <!-- TABLATURE (standard orientation — never mirrored) -->
-        <div class="mf-panel">
-          <div class="mf-bar">
-            <span class="mf-pl">tablature</span>
-            <span class="mf-pt">forward roll · open G</span>
+    <div class="mf-body">
+    <!-- BANJO INSTRUMENT MENU (left on desktop, hero on mobile) -->
+    <div class="mf-menu">
+      <p class="mf-menu-hint">// pluck a string</p>
+      <div class="mf-instr">
+        <svg class="mf-instr-svg" viewBox="80 44 240 636" role="group"
+          aria-label="A stylized close-up of a five-string banjo: steel strings running over a wooden bridge and down to a flat-gray tailpiece on a cream drum head. Pluck a string to pull up a fact.">
+          <g class="mf-assembly">
+            <g class="mf-g-bridge"></g>
+            <g class="mf-g-strings"></g>
+            <g class="mf-g-tail"></g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- FACT STAGE -->
+    <div class="mf-stage" aria-live="polite">
+      <!-- default: generic intro -->
+      <div class="mf-fp mf-fp-intro" data-k="default">
+        <p class="mf-lede">
+          Right-handed, until <span class="mf-hl">focal dystonia</span> closed that hand on the strings.
+          So I turned the banjo over and started again, left-handed — new hand, same tunes,
+          slower and truer. The relearning isn't a footnote. It <span class="mf-hl">is</span> the music now.
+        </p>
+        <p class="mf-hint">pluck a string to pull up a fact →</p>
+      </div>
+
+      <!-- k=0 · the count (stat) [PLACEHOLDER] -->
+      <div class="mf-fp" data-k="0" hidden>
+        <p class="mf-fp-h">the count</p>
+        <div class="mf-stat"><span class="mf-stat-num">100%</span><span class="mf-stat-unit">left-handed</span></div>
+        <p class="mf-stat-label">Everything I play now, I play on the other side of the instrument.</p>
+      </div>
+
+      <!-- k=1 · progress (bar) [PLACEHOLDER] -->
+      <div class="mf-fp" data-k="1" hidden>
+        <p class="mf-fp-h">progress</p>
+        <div class="mf-bar2"><div class="mf-bar2-fill" style="width:64%"></div></div>
+        <p class="mf-fp-sub">Rebuilding the roll, note by note. Not done — that's rather the point.</p>
+      </div>
+
+      <!-- k=2 · the neck (tablature + fretboard) -->
+      <div class="mf-fp" data-k="2" hidden>
+        <p class="mf-fp-h">the neck</p>
+        <div class="mf-score">
+          <div class="mf-panel">
+            <div class="mf-bar"><span class="mf-pl">tablature</span><span class="mf-pt">forward roll · open G</span></div>
+            <svg class="mf-tab" viewBox="0 0 680 184" role="img"
+              aria-label="Five-string banjo tablature: a forward roll in open G over two measures. Strings top to bottom are D, B, G, D and the short fifth string g. The fifth string sounds open throughout; the second measure adds a hammer-on from open to the second fret on the G string.">
+              <g aria-hidden="true">
+                <text class="mf-clef" x="16" y="42">T</text>
+                <text class="mf-clef" x="16" y="78">A</text>
+                <text class="mf-clef" x="16" y="114">B</text>
+                <line class="mf-staff" x1="56" y1="30" x2="664" y2="30"/>
+                <line class="mf-staff" x1="56" y1="58" x2="664" y2="58"/>
+                <line class="mf-staff" x1="56" y1="86" x2="664" y2="86"/>
+                <line class="mf-staff" x1="56" y1="114" x2="664" y2="114"/>
+                <line class="mf-staff" x1="56" y1="142" x2="664" y2="142"/>
+                <text class="mf-sname" x="40" y="34" text-anchor="end">D</text>
+                <text class="mf-sname" x="40" y="62" text-anchor="end">B</text>
+                <text class="mf-sname" x="40" y="90" text-anchor="end">G</text>
+                <text class="mf-sname" x="40" y="118" text-anchor="end">D</text>
+                <text class="mf-sname" x="40" y="146" text-anchor="end">g</text>
+                <line class="mf-barline" x1="56" y1="30" x2="56" y2="142"/>
+                <line class="mf-barline" x1="360" y1="30" x2="360" y2="142"/>
+                <line class="mf-barline" x1="662" y1="30" x2="662" y2="142"/>
+                <line class="mf-barline" x1="657" y1="30" x2="657" y2="142"/>
+                <rect class="mf-slab" x="83" y="78" width="14" height="16"/><text class="mf-num" x="90" y="91" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="119" y="50" width="14" height="16"/><text class="mf-num" x="126" y="63" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="155" y="22" width="14" height="16"/><text class="mf-num" x="162" y="35" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="191" y="134" width="14" height="16"/><text class="mf-num" x="198" y="147" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="227" y="78" width="14" height="16"/><text class="mf-num" x="234" y="91" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="263" y="50" width="14" height="16"/><text class="mf-num" x="270" y="63" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="299" y="22" width="14" height="16"/><text class="mf-num" x="306" y="35" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="335" y="134" width="14" height="16"/><text class="mf-num" x="342" y="147" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="367" y="78" width="30" height="16"/><text class="mf-num" x="382" y="91" text-anchor="middle">0h2</text>
+                <rect class="mf-slab" x="407" y="50" width="14" height="16"/><text class="mf-num" x="414" y="63" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="443" y="22" width="14" height="16"/><text class="mf-num" x="450" y="35" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="479" y="134" width="14" height="16"/><text class="mf-num" x="486" y="147" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="515" y="106" width="14" height="16"/><text class="mf-num" x="522" y="119" text-anchor="middle">2</text>
+                <rect class="mf-slab" x="551" y="50" width="14" height="16"/><text class="mf-num" x="558" y="63" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="587" y="22" width="14" height="16"/><text class="mf-num" x="594" y="35" text-anchor="middle">0</text>
+                <rect class="mf-slab" x="623" y="134" width="14" height="16"/><text class="mf-num" x="630" y="147" text-anchor="middle">0</text>
+                <text class="mf-sname" x="90"  y="172" text-anchor="middle">T</text>
+                <text class="mf-sname" x="126" y="172" text-anchor="middle">I</text>
+                <text class="mf-sname" x="162" y="172" text-anchor="middle">M</text>
+                <text class="mf-sname" x="198" y="172" text-anchor="middle">T</text>
+                <text class="mf-sname" x="234" y="172" text-anchor="middle">T</text>
+                <text class="mf-sname" x="270" y="172" text-anchor="middle">I</text>
+                <text class="mf-sname" x="306" y="172" text-anchor="middle">M</text>
+                <text class="mf-sname" x="342" y="172" text-anchor="middle">T</text>
+              </g>
+            </svg>
           </div>
-          <svg class="mf-tab" viewBox="0 0 680 184" role="img"
-            aria-label="Five-string banjo tablature: a forward roll in open G over two measures. Strings from top to bottom are D, B, G, D and the short fifth string g. The fifth string sounds open throughout; the second measure adds a hammer-on from open to the second fret on the G string.">
-            <g aria-hidden="true">
-              <!-- clef T A B -->
-              <text class="mf-clef" x="16" y="42">T</text>
-              <text class="mf-clef" x="16" y="78">A</text>
-              <text class="mf-clef" x="16" y="114">B</text>
-              <!-- string lines -->
-              <line class="mf-staff" x1="56" y1="30" x2="664" y2="30"/>
-              <line class="mf-staff" x1="56" y1="58" x2="664" y2="58"/>
-              <line class="mf-staff" x1="56" y1="86" x2="664" y2="86"/>
-              <line class="mf-staff" x1="56" y1="114" x2="664" y2="114"/>
-              <line class="mf-staff" x1="56" y1="142" x2="664" y2="142"/>
-              <!-- string names -->
-              <text class="mf-sname" x="40" y="34" text-anchor="end">D</text>
-              <text class="mf-sname" x="40" y="62" text-anchor="end">B</text>
-              <text class="mf-sname" x="40" y="90" text-anchor="end">G</text>
-              <text class="mf-sname" x="40" y="118" text-anchor="end">D</text>
-              <text class="mf-sname" x="40" y="146" text-anchor="end">g</text>
-              <!-- barlines -->
-              <line class="mf-barline" x1="56" y1="30" x2="56" y2="142"/>
-              <line class="mf-barline" x1="360" y1="30" x2="360" y2="142"/>
-              <line class="mf-barline" x1="662" y1="30" x2="662" y2="142"/>
-              <line class="mf-barline" x1="657" y1="30" x2="657" y2="142"/>
-              <!-- NUMBERS: measure 1 (open-G forward roll) -->
-              <rect class="mf-slab" x="83" y="78" width="14" height="16"/><text class="mf-num" x="90" y="91" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="119" y="50" width="14" height="16"/><text class="mf-num" x="126" y="63" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="155" y="22" width="14" height="16"/><text class="mf-num" x="162" y="35" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="191" y="134" width="14" height="16"/><text class="mf-num" x="198" y="147" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="227" y="78" width="14" height="16"/><text class="mf-num" x="234" y="91" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="263" y="50" width="14" height="16"/><text class="mf-num" x="270" y="63" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="299" y="22" width="14" height="16"/><text class="mf-num" x="306" y="35" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="335" y="134" width="14" height="16"/><text class="mf-num" x="342" y="147" text-anchor="middle">0</text>
-              <!-- measure 2 -->
-              <rect class="mf-slab" x="367" y="78" width="30" height="16"/><text class="mf-num" x="382" y="91" text-anchor="middle">0h2</text>
-              <rect class="mf-slab" x="407" y="50" width="14" height="16"/><text class="mf-num" x="414" y="63" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="443" y="22" width="14" height="16"/><text class="mf-num" x="450" y="35" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="479" y="134" width="14" height="16"/><text class="mf-num" x="486" y="147" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="515" y="106" width="14" height="16"/><text class="mf-num" x="522" y="119" text-anchor="middle">2</text>
-              <rect class="mf-slab" x="551" y="50" width="14" height="16"/><text class="mf-num" x="558" y="63" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="587" y="22" width="14" height="16"/><text class="mf-num" x="594" y="35" text-anchor="middle">0</text>
-              <rect class="mf-slab" x="623" y="134" width="14" height="16"/><text class="mf-num" x="630" y="147" text-anchor="middle">0</text>
-              <!-- picking marks under staff -->
-              <text class="mf-sname" x="90"  y="172" text-anchor="middle">T</text>
-              <text class="mf-sname" x="126" y="172" text-anchor="middle">I</text>
-              <text class="mf-sname" x="162" y="172" text-anchor="middle">M</text>
-              <text class="mf-sname" x="198" y="172" text-anchor="middle">T</text>
-              <text class="mf-sname" x="234" y="172" text-anchor="middle">T</text>
-              <text class="mf-sname" x="270" y="172" text-anchor="middle">I</text>
-              <text class="mf-sname" x="306" y="172" text-anchor="middle">M</text>
-              <text class="mf-sname" x="342" y="172" text-anchor="middle">T</text>
-            </g>
-          </svg>
-        </div>
 
-        <!-- FRETBOARD (defaults to LEFT / mirrored) -->
-        <div class="mf-panel">
-          <div class="mf-fbhead">
-            <span class="mf-bar" style="margin:0"><span class="mf-pl">fretboard</span></span>
-            <div class="mf-seg" role="group" aria-label="Playing hand">
-              <button type="button" class="mf-hand-right" aria-pressed="false">Right</button>
-              <button type="button" class="mf-hand-left" aria-pressed="true">Left</button>
+          <div class="mf-panel">
+            <div class="mf-fbhead">
+              <span class="mf-bar" style="margin:0"><span class="mf-pl">fretboard</span></span>
+              <div class="mf-seg" role="group" aria-label="Playing hand">
+                <button type="button" class="mf-hand-right" aria-pressed="false">Right</button>
+                <button type="button" class="mf-hand-left" aria-pressed="true">Left</button>
+              </div>
             </div>
+            <svg class="mf-fret mf-left mf-fretboard" viewBox="0 0 680 230" role="img"
+              aria-label="A five-string banjo neck diagram. Four long strings run the length of the neck; the short fifth string begins at the fifth fret. One finger is at the second fret of the G string; the other strings ring open. The diagram mirrors between right- and left-handed.">
+              <g class="mf-neckgroup">
+                <rect class="mf-neck" x="80" y="40" width="552" height="150" rx="4"/>
+                <rect class="mf-nut" x="76" y="38" width="8" height="154" rx="2"/>
+                <line class="mf-fretline" x1="159" y1="40" x2="159" y2="190"/>
+                <line class="mf-fretline" x1="238" y1="40" x2="238" y2="190"/>
+                <line class="mf-fretline" x1="317" y1="40" x2="317" y2="190"/>
+                <line class="mf-fretline" x1="396" y1="40" x2="396" y2="190"/>
+                <line class="mf-fretline" x1="475" y1="40" x2="475" y2="190"/>
+                <line class="mf-fretline" x1="554" y1="40" x2="554" y2="190"/>
+                <line class="mf-fretline" x1="632" y1="40" x2="632" y2="190"/>
+                <circle class="mf-inlay" cx="277" cy="115" r="6"/>
+                <circle class="mf-inlay" cx="593" cy="115" r="6"/>
+                <line class="mf-string" x1="84" y1="58"  x2="632" y2="58"/>
+                <line class="mf-string" x1="84" y1="92"  x2="632" y2="92"/>
+                <line class="mf-string" x1="84" y1="126" x2="632" y2="126"/>
+                <line class="mf-string mf-wound" x1="84" y1="160" x2="632" y2="160"/>
+                <line class="mf-string" x1="475" y1="178" x2="632" y2="178"/>
+                <circle class="mf-peg" cx="475" cy="178" r="5"/>
+                <circle class="mf-open-mark" cx="68" cy="58"  r="5"/>
+                <circle class="mf-open-mark" cx="68" cy="92"  r="5"/>
+                <circle class="mf-open-mark" cx="68" cy="160" r="5"/>
+                <circle class="mf-finger" cx="198" cy="126" r="11"/>
+              </g>
+              <g aria-hidden="true">
+                <text class="mf-fname-side" x="40" y="62"  text-anchor="middle">D</text>
+                <text class="mf-fname-side" x="40" y="96"  text-anchor="middle">B</text>
+                <text class="mf-fname-side" x="40" y="130" text-anchor="middle">G</text>
+                <text class="mf-fname-side" x="40" y="164" text-anchor="middle">D</text>
+                <text class="mf-fname-side" x="40" y="206" text-anchor="middle">g</text>
+              </g>
+            </svg>
+            <p class="mf-fbcaption"><b>Left-handed</b> — how I play now. Flip it to see where I started.</p>
           </div>
-          <svg class="mf-fret mf-left mf-fretboard" viewBox="0 0 680 230" role="img"
-            aria-label="A five-string banjo neck diagram. Four long strings run the length of the neck; the short fifth string begins at the fifth fret. One finger is placed at the second fret of the G string; the other strings ring open. The diagram can be mirrored between a right-handed and a left-handed orientation.">
-            <g class="mf-neckgroup">
-              <!-- neck -->
-              <rect class="mf-neck" x="80" y="40" width="552" height="150" rx="4"/>
-              <!-- nut -->
-              <rect class="mf-nut" x="76" y="38" width="8" height="154" rx="2"/>
-              <!-- fretwires (7 frets) -->
-              <line class="mf-fretline" x1="159" y1="40" x2="159" y2="190"/>
-              <line class="mf-fretline" x1="238" y1="40" x2="238" y2="190"/>
-              <line class="mf-fretline" x1="317" y1="40" x2="317" y2="190"/>
-              <line class="mf-fretline" x1="396" y1="40" x2="396" y2="190"/>
-              <line class="mf-fretline" x1="475" y1="40" x2="475" y2="190"/>
-              <line class="mf-fretline" x1="554" y1="40" x2="554" y2="190"/>
-              <line class="mf-fretline" x1="632" y1="40" x2="632" y2="190"/>
-              <!-- inlays (frets 3 and 7 spaces) -->
-              <circle class="mf-inlay" cx="277" cy="115" r="6"/>
-              <circle class="mf-inlay" cx="593" cy="115" r="6"/>
-              <!-- strings 1-4 full length -->
-              <line class="mf-string" x1="84" y1="58"  x2="632" y2="58"/>
-              <line class="mf-string" x1="84" y1="92"  x2="632" y2="92"/>
-              <line class="mf-string" x1="84" y1="126" x2="632" y2="126"/>
-              <line class="mf-string mf-wound" x1="84" y1="160" x2="632" y2="160"/>
-              <!-- 5th string: begins at 5th fret (x=475) -->
-              <line class="mf-string" x1="475" y1="178" x2="632" y2="178"/>
-              <circle class="mf-peg" cx="475" cy="178" r="5"/>
-              <!-- open markers at nut -->
-              <circle class="mf-open-mark" cx="68" cy="58"  r="5"/>
-              <circle class="mf-open-mark" cx="68" cy="92"  r="5"/>
-              <circle class="mf-open-mark" cx="68" cy="160" r="5"/>
-              <!-- finger: G string (y=126) at 2nd fret (between 159 & 238 -> 198) -->
-              <circle class="mf-finger" cx="198" cy="126" r="11"/>
-            </g>
-            <!-- static labels (unflipped, positioned by y only) -->
-            <g aria-hidden="true">
-              <text class="mf-fname-side" x="40" y="62"  text-anchor="middle">D</text>
-              <text class="mf-fname-side" x="40" y="96"  text-anchor="middle">B</text>
-              <text class="mf-fname-side" x="40" y="130" text-anchor="middle">G</text>
-              <text class="mf-fname-side" x="40" y="164" text-anchor="middle">D</text>
-              <text class="mf-fname-side" x="40" y="206" text-anchor="middle">g</text>
-            </g>
-          </svg>
-          <p class="mf-fbcaption"><b>Left-handed</b> — how I play now. Flip it to see where I started.</p>
         </div>
       </div>
 
-      <div class="mf-cta-row">
-        <a class="mf-cta" href="mailto:alexey@chudinov.example?subject=The%20journey"><span class="mf-gl" aria-hidden="true">0&nbsp;2&nbsp;0</span> Hear the journey</a>
+      <!-- k=3 · right now (terminal) [PLACEHOLDER] -->
+      <div class="mf-fp" data-k="3" hidden>
+        <p class="mf-fp-h">right now</p>
+        <div class="mf-term">
+          <div><span class="mf-pr">$</span> now-practicing</div>
+          <div>forward rolls · open G · slow and clean</div>
+          <div><span class="mf-dim"># most mornings, before the code</span></div>
+        </div>
+      </div>
+
+      <!-- k=4 · influences (tags) [PLACEHOLDER] -->
+      <div class="mf-fp" data-k="4" hidden>
+        <p class="mf-fp-h">influences</p>
+        <div class="mf-tags">
+          <span class="mf-chip">Scruggs style</span>
+          <span class="mf-chip">the forward roll</span>
+          <span class="mf-chip">open G</span>
+          <span class="mf-chip">bluegrass</span>
+          <span class="mf-chip">one more tune</span>
+        </div>
       </div>
     </div>
-
-    <aside class="mf-meta" aria-label="Musician details">
-      <p class="mf-note"><span class="mf-amp">//</span> soul.02 — tablature</p>
-      <p class="mf-note">instrument = 5-string banjo</p>
-      <p class="mf-note">style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= bluegrass</p>
-      <p class="mf-note">hand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= right → left</p>
-      <p class="mf-note">status&nbsp;&nbsp;&nbsp;&nbsp;= relearning, daily</p>
-    </aside>
+    </div><!-- /mf-body -->
   </div>
-
-  <!-- FIVE STRINGS, FIVE FACTS — pluck a string to reveal a fact -->
-  <section class="mf-strings-block" aria-labelledby="mf-strings-h">
-    <h3 class="mf-strings-h" id="mf-strings-h">Five strings, five facts</h3>
-    <p class="mf-strings-hint">Pluck a string.</p>
-    <div class="mf-strings-layout">
-      <div class="mf-strings" role="group" aria-label="Five banjo strings — pluck one to reveal a fact">
-        <button class="mf-str" type="button" data-i="0" aria-pressed="false" aria-label="String 1, D — reveal a fact"><span class="mf-str-line" data-g="1"></span><span class="mf-str-note">D</span></button>
-        <button class="mf-str" type="button" data-i="1" aria-pressed="false" aria-label="String 2, B — reveal a fact"><span class="mf-str-line" data-g="2"></span><span class="mf-str-note">B</span></button>
-        <button class="mf-str" type="button" data-i="2" aria-pressed="false" aria-label="String 3, G — reveal a fact"><span class="mf-str-line" data-g="3"></span><span class="mf-str-note">G</span></button>
-        <button class="mf-str" type="button" data-i="3" aria-pressed="false" aria-label="String 4, D — reveal a fact"><span class="mf-str-line" data-g="4"></span><span class="mf-str-note">D</span></button>
-        <button class="mf-str" type="button" data-i="4" aria-pressed="false" aria-label="String 5, g — reveal a fact"><span class="mf-str-line" data-g="5"></span><span class="mf-str-note">g</span></button>
-      </div>
-      <div class="mf-fact">
-        <p class="mf-fact-text" aria-live="polite">Pluck a string to hear a little about my playing.</p>
-      </div>
-    </div>
-  </section>
 
   <script is:inline>
   (function(){
@@ -318,34 +311,168 @@
     if (!root || root.dataset.mfInit) return;
     root.dataset.mfInit = '1';
 
-    // ---- five strings, five facts (pluck a string → reveal a fact) ----
-    // PLACEHOLDER facts grounded in what's known — Alexey to confirm / replace with his 5.
-    var strEls = [].slice.call(root.querySelectorAll('.mf-str'));
-    var factEl = root.querySelector('.mf-fact-text');
-    var FACTS = [
-      'Five-string bluegrass banjo — rolls, drives, Scruggs style.',
-      'Right-handed by birth; now I play it left-handed.',
-      'Rebuilt my playing from zero after focal dystonia.',
-      'Home base: open-G tuning (g D G B D).',
-      'Still at it — most days, one roll at a time.'
-    ];
-    strEls.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var i = parseInt(btn.getAttribute('data-i'), 10) || 0;
-        strEls.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-        btn.setAttribute('aria-pressed', 'true');
-        var line = btn.querySelector('.mf-str-line');
-        if (line) { line.classList.remove('mf-twang'); void line.offsetWidth; line.classList.add('mf-twang'); }
-        if (factEl && FACTS[i]) { factEl.textContent = FACTS[i]; }
+    // ---- fact panels: pluck a string to swap the shown panel ----
+    var panels = [].slice.call(root.querySelectorAll('.mf-fp'));
+    var current = 'default';
+    function show(k){
+      panels.forEach(function(p){
+        var on = p.getAttribute('data-k') === k;
+        p.hidden = !on;
+        p.classList.toggle('is-on', on);
       });
-    });
+    }
 
-    var fb  = root.querySelector('.mf-fretboard');
-    var bR  = root.querySelector('.mf-hand-right');
-    var bL  = root.querySelector('.mf-hand-left');
+    // ---- the banjo instrument = menu; each string plucks (bows) and selects its fact ----
+    // Assembly ported verbatim from the tuned source (banjo-strings.html); slider
+    // controls dropped and the five FINAL BAKED PARAMS hard-coded below for easy retune.
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = root.querySelector('.mf-instr-svg');
+    var gStrings = root.querySelector('.mf-g-strings');
+    var gBridge = root.querySelector('.mf-g-bridge');
+    var gTail = root.querySelector('.mf-g-tail');
+    var assembly = root.querySelector('.mf-assembly');
+    var stage = root.querySelector('.mf-stage');
+    var mqMobile = (function(){ try { return matchMedia('(max-width:759px)'); } catch(e){ return { matches:false }; } })();
+    var REDUCE = (function(){ try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){ return false; } })();
+
+    // FINAL BAKED PARAMS (tuned on banjo-strings.html — no sliders on the site) ----
+    var CX = 200, TAILY = 558;
+    var INCLINE = 0;             // no incline
+    var BRIDGEY = 680 * 0.60;    // bridge pos 60%
+    var BSPREAD = 37;            // bridge spread
+    var TSPREAD = 17;            // tail spread
+    var TOP = 70;                // playing length
+    var GAUGE = [1.3, 2.0, 2.8, 4.0, 1.3]; // 1st & 5th thinnest, 4th wound-thick
+    var TITLES = ['the count', 'progress', 'the neck', 'right now', 'influences'];
+    var strGroups = [];
+
+    function el(name, attrs){ var e = document.createElementNS(NS, name); for (var a in attrs){ e.setAttribute(a, attrs[a]); } return e; }
+    function clearG(g){ while (g.firstChild) g.removeChild(g.firstChild); }
+
+    // pluck: bow the playing segment (neck -> bridge) with a damped oscillation; endpoints stay fixed
+    function pluck(path, x, y0, y1){
+      var mid = (y0 + y1) / 2, straight = 'M ' + x + ' ' + y0 + ' Q ' + x + ' ' + mid + ' ' + x + ' ' + y1;
+      if (REDUCE){ path.setAttribute('d', straight); return; }
+      var A = 9, cycles = 26, decay = 5, dur = 560, t0 = performance.now();
+      function frame(now){
+        var e = (now - t0) / dur;
+        if (e >= 1){ path.setAttribute('d', straight); return; }
+        var disp = A * Math.sin(e * cycles) * Math.exp(-e * decay);
+        path.setAttribute('d', 'M ' + x + ' ' + y0 + ' Q ' + (x + disp) + ' ' + mid + ' ' + x + ' ' + y1);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function selectFact(k, btn){
+      current = k; show(k);
+      strGroups.forEach(function(g){ g.setAttribute('aria-pressed', g === btn ? 'true' : 'false'); });
+      // mobile: the content panel sits below the hero — scroll down to it
+      if (mqMobile.matches && stage){
+        try { stage.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block: 'start' }); }
+        catch(e){ stage.scrollIntoView(); }
+      }
+    }
+
+    function applyIncline(){ assembly.setAttribute('transform', 'rotate(' + INCLINE + ' ' + CX + ' ' + ((TOP + TAILY) / 2) + ')'); }
+
+    function draw(){
+      // ---- strings ----
+      clearG(gStrings);
+      strGroups = [];
+      for (var i = 0; i < 5; i++){
+        var xt = CX + (i - 2) * BSPREAD;
+        var xa = CX + (i - 2) * TSPREAD;
+        var mid = (TOP + BRIDGEY) / 2;
+        var g = el('g', { 'class':'mf-istring', 'tabindex':'0', 'role':'button', 'aria-pressed':'false',
+          'aria-label':'Pluck string ' + (i + 1) + ' — ' + TITLES[i] });
+        // wider invisible hit area over the whole string (centre extends past the tuck)
+        var hitPts = xt + ',' + TOP + ' ' + xt + ',' + BRIDGEY + ' ' + xa + ',' + TAILY;
+        if (i === 2) hitPts += ' ' + xa + ',' + (TAILY + 16);
+        var hit = el('polyline', { points: hitPts, fill:'none', stroke:'transparent', 'stroke-width':16 });
+        // dead segment behind the bridge (bridge -> tailpiece); the centre string runs on
+        // down and UNDER the plate, so the tailpiece hides its end (z-order)
+        var tailEndY = (i === 2) ? (TAILY + 40) : TAILY;
+        var tail = el('polyline', { 'class':'mf-iwire', points: xt + ',' + BRIDGEY + ' ' + xa + ',' + tailEndY,
+          fill:'none', stroke:'#5b5446', 'stroke-width':GAUGE[i], 'stroke-linecap':'round' });
+        // playing length (neck -> bridge): the part that vibrates when plucked
+        var top = el('path', { 'class':'mf-iwire', d:'M ' + xt + ' ' + TOP + ' Q ' + xt + ' ' + mid + ' ' + xt + ' ' + BRIDGEY,
+          fill:'none', stroke:'#5b5446', 'stroke-width':GAUGE[i], 'stroke-linecap':'round' });
+        g.appendChild(hit); g.appendChild(tail); g.appendChild(top);
+        (function(path, x, y0, y1, k, btn){
+          function fire(){ pluck(path, x, y0, y1); selectFact(k, btn); }
+          btn.addEventListener('click', fire);
+          btn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fire(); } });
+        })(top, xt, TOP, BRIDGEY, String(i), g);
+        strGroups.push(g);
+        gStrings.appendChild(g);
+      }
+      // ---- bridge: v3, injected verbatim and scaled so its 104.3u notch spacing maps
+      //      to the string SPREAD (bridge size fixed at the spread-30 look) ----
+      var bs = 30 / 104.3;
+      gBridge.setAttribute('transform', 'translate(' + CX + ' ' + BRIDGEY + ') scale(' + bs + ') translate(-430 -37.6)');
+      gBridge.innerHTML =
+        '<defs>'
+        + '<linearGradient id="mf-maple3" x1="0" y1="77" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ecdcb4"/><stop offset="0.55" stop-color="#e3cfa0"/><stop offset="1" stop-color="#d2b982"/></linearGradient>'
+        + '<linearGradient id="mf-ebony3" x1="0" y1="37.6" x2="0" y2="77.6" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#352a1e"/><stop offset="0.25" stop-color="#241c15"/><stop offset="1" stop-color="#1c150f"/></linearGradient>'
+        + '<filter id="mf-soft3" x="-20%" y="-150%" width="140%" height="400%"><feGaussianBlur stdDeviation="3.2"/></filter>'
+        + '</defs>'
+        + '<g filter="url(#mf-soft3)" fill="#6b5a3c" opacity="0.22"><rect x="54" y="199.5" width="212" height="5.5" rx="2.5"/><rect x="337" y="199.5" width="186" height="5.5" rx="2.5"/><rect x="594" y="199.5" width="212" height="5.5" rx="2.5"/></g>'
+        + '<path fill="#e4d1a0" stroke="#b79a63" stroke-width="1.6" stroke-linejoin="round" d="M 117,77.6 C 121,86 123.5,94 123.5,102 C 123.5,113 121,121 121,132 C 119,146 112,157 101,166 C 90,175 76,183 62,188 L 55,190 Q 50.5,191.5 50.5,196 L 50.5,200 L 269,200 L 269,183 Q 269,179 265,179 L 234,179 A 30 30 0 0 1 204,149 L 204,134 A 25 25 0 0 1 229,109 L 374,109 A 25 25 0 0 1 399,134 L 399,149 A 30 30 0 0 1 369,179 L 338,179 Q 334,179 334,183 L 334,200 L 526,200 L 526,183 Q 526,179 522,179 L 491,179 A 30 30 0 0 1 461,149 L 461,134 A 25 25 0 0 1 486,109 L 631,109 A 25 25 0 0 1 656,134 L 656,149 A 30 30 0 0 1 626,179 L 595,179 Q 591,179 591,183 L 591,200 L 809.5,200 L 809.5,196 Q 809.5,191.5 805,190 L 798,188 C 784,183 770,175 759,166 C 748,157 741,146 739,132 C 739,121 736.5,113 736.5,102 C 736.5,94 739,86 743,77.6 Z"/>'
+        + '<path fill="url(#mf-ebony3)" stroke="#120d09" stroke-width="1" stroke-linejoin="round" d="M 117,77.6 L 117,42 Q 117,37.6 122,37.6 L 738,37.6 Q 743,37.6 743,42 L 743,77.6 Z"/>';
+
+      // ---- tailpiece: Deering-style flat-gray plate — two T-ears with a centre notch,
+      //      a keyhole slot, slight taper, strings running down the face to anchor ----
+      clearG(gTail);
+      var topHalf = 46, botHalf = 41;
+      var left = CX - topHalf, right = CX + topHalf, bL = CX - botHalf, bR = CX + botHalf;
+      var pTop = TAILY, pBot = TAILY + 120, rr = 7;
+      var pc = 28, stemW = 26, capW = 38, capH = 15, stemTop = pTop - 24;
+      // two T-ears (drawn first so the plate top merges their stems)
+      [CX - pc, CX + pc].forEach(function(cx){
+        gTail.appendChild(el('rect', { x:cx - stemW/2, y:stemTop + capH - 2, width:stemW, height:pTop - (stemTop + capH) + 8, fill:'#c7c6c1' }));
+        gTail.appendChild(el('rect', { x:cx - capW/2, y:stemTop, width:capW, height:capH, rx:5, fill:'#c7c6c1', stroke:'#8f8d86', 'stroke-width':1 }));
+        gTail.appendChild(el('rect', { x:cx - capW/2 + 3, y:stemTop + 2, width:capW - 6, height:2, rx:1, fill:'rgba(255,255,255,.2)' }));
+      });
+      // main plate: top edge with a shallow centre notch, tapering body, rounded corners
+      var nH = 12;
+      var d = 'M ' + left + ' ' + (pTop + rr)
+        + ' Q ' + left + ' ' + pTop + ' ' + (left + rr) + ' ' + pTop
+        + ' L ' + (CX - 12) + ' ' + pTop + ' L ' + (CX - 12) + ' ' + (pTop + nH) + ' L ' + (CX + 12) + ' ' + (pTop + nH) + ' L ' + (CX + 12) + ' ' + pTop
+        + ' L ' + (right - rr) + ' ' + pTop + ' Q ' + right + ' ' + pTop + ' ' + right + ' ' + (pTop + rr)
+        + ' L ' + bR + ' ' + (pBot - rr) + ' Q ' + bR + ' ' + pBot + ' ' + (bR - rr) + ' ' + pBot
+        + ' L ' + (bL + rr) + ' ' + pBot + ' Q ' + bL + ' ' + pBot + ' ' + bL + ' ' + (pBot - rr)
+        + ' L ' + left + ' ' + (pTop + rr) + ' Z';
+      gTail.appendChild(el('path', { d:d, fill:'#c7c6c1', stroke:'#8f8d86', 'stroke-width':1.3 }));
+      // inner bevel sheen down the left
+      gTail.appendChild(el('path', { d:'M ' + (left + 5) + ' ' + (pTop + rr + 3) + ' L ' + (bL + 5) + ' ' + (pBot - rr - 3), fill:'none', stroke:'rgba(255,255,255,.12)', 'stroke-width':1 }));
+      // keyhole slot (upper middle) — shows the head through it
+      gTail.appendChild(el('rect', { x:CX - 5, y:pTop + 24, width:10, height:30, rx:5, fill:'#e4d8bf', stroke:'rgba(20,18,16,.32)', 'stroke-width':1 }));
+      // strings running down the face, anchoring at the base
+      for (var t = 0; t < 5; t++){
+        var xTop = CX + (t - 2) * TSPREAD, xBot = CX + (t - 2) * (TSPREAD * 0.9);
+        var gg = GAUGE[t] || 1.5;
+        // on-tailpiece piece; the centre one starts below the tuck (its top is hidden under the plate)
+        var faceTop = (t === 2) ? pTop + 29 : pTop + 7;
+        gTail.appendChild(el('line', { x1:xTop, y1:faceTop, x2:xBot, y2:pBot - 4, stroke:'#5b5446', 'stroke-width':gg, 'stroke-linecap':'round', opacity:0.92 }));
+      }
+      // top-edge highlight
+      gTail.appendChild(el('path', { d:'M ' + (left + 7) + ' ' + (pTop + 3) + ' L ' + (CX - 14) + ' ' + (pTop + 3), stroke:'rgba(255,255,255,.4)', 'stroke-width':1.4, fill:'none', 'stroke-linecap':'round' }));
+
+      applyIncline();
+    }
+
+    if (svg && gStrings && gBridge && gTail && assembly){
+      gTail.setAttribute('pointer-events', 'none'); // let string clicks pass through the tailpiece
+      draw();
+    }
+
+    // ---- fretboard right/left toggle (inside the "the neck" fact) ----
+    var fb = root.querySelector('.mf-fretboard');
+    var bR = root.querySelector('.mf-hand-right');
+    var bL = root.querySelector('.mf-hand-left');
     var cap = root.querySelector('.mf-fbcaption');
     if (!fb || !bR || !bL || !cap) return;
-
     function setHand(left){
       fb.classList.toggle('mf-left', left);
       bL.setAttribute('aria-pressed', String(left));
