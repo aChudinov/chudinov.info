@@ -278,21 +278,9 @@ const mf = {
         <p class="mf-hint">{t('music.intro.hint')}</p>
       </div>
 
-      <!-- k=0 · history (timeline on a banjo "string" with fret-marker nodes) -->
+      <!-- string 1 · history + family roots (data-k=0) -->
       <div class="mf-fp" data-k="0" hidden>
         <p class="mf-fp-h">{t('music.fact0.h')}</p>
-        <ol class="mf-timeline">
-          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w1')}</span><p class="mf-tl-text">{t('music.hist.t1')}</p></div></li>
-          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w2')}</span><p class="mf-tl-text">{t('music.hist.t2')}</p></div></li>
-          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w3')}</span><p class="mf-tl-text">{t('music.hist.t3')}</p></div></li>
-          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w4')}</span><p class="mf-tl-text">{t('music.hist.t4')}</p></div></li>
-          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w5')}</span><p class="mf-tl-text">{t('music.hist.t5')}</p><p class="mf-tl-hint">{t('music.hist.hint')}</p></div></li>
-        </ol>
-      </div>
-
-      <!-- string 2 · family (data-k=1) — musical roots + video slots -->
-      <div class="mf-fp" data-k="1" hidden>
-        <p class="mf-fp-h">{t('music.fact1.h')}</p>
         <p class="mf-ptext">{t('music.family.body')}</p>
         <div class="mf-vids">
           <figure class="mf-vid">
@@ -312,6 +300,26 @@ const mf = {
             <figcaption class="mf-vid-cap">{t('music.family.v2')}</figcaption>
           </figure>
         </div>
+        <ol class="mf-timeline">
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w1')}</span><p class="mf-tl-text">{t('music.hist.t1')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w2')}</span><p class="mf-tl-text">{t('music.hist.t2')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w3')}</span><p class="mf-tl-text">{t('music.hist.t3')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w4')}</span><p class="mf-tl-text">{t('music.hist.t4')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w5')}</span><p class="mf-tl-text">{t('music.hist.t5')}</p><p class="mf-tl-hint">{t('music.hist.hint')}</p></div></li>
+        </ol>
+      </div>
+
+      <!-- string 2 · the scene / memory box (data-k=1) -->
+      <div class="mf-fp" data-k="1" hidden>
+        <p class="mf-fp-h">{t('music.fact1.h')}</p>
+        <p class="mf-ptext">{t('music.scene.body')}</p>
+        <div class="mf-mem">
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c1t')}</p><p class="mf-mem-txt">{t('music.scene.c1b')}</p></div>
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c2t')}</p><p class="mf-mem-txt">{t('music.scene.c2b')}</p></div>
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c3t')}</p><p class="mf-mem-txt">{t('music.scene.c3b')}</p></div>
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c4t')}</p><p class="mf-mem-txt">{t('music.scene.c4b')}</p></div>
+        </div>
+        <p class="mf-soon">{t('music.scene.soon')}</p>
       </div>
 
       <!-- string 5 · left-handed journey (data-k=4) — the tab + fretboard live here now.
@@ -321,58 +329,8 @@ const mf = {
         <p class="mf-lh-intro">{t('music.lh.intro')}</p>
         <div class="mf-score">
           <div class="mf-panel">
-            <div class="mf-bar"><span class="mf-pl">{t('music.fact2.tab.label')}</span><span class="mf-pt">{t('music.fact2.tab.tag')}</span></div>
-            <svg class="mf-tab" viewBox="0 0 680 184" role="img"
-              aria-label={t('music.fact2.tab.aria')}>
-              <g aria-hidden="true">
-                <text class="mf-clef" x="16" y="42">T</text>
-                <text class="mf-clef" x="16" y="78">A</text>
-                <text class="mf-clef" x="16" y="114">B</text>
-                <line class="mf-staff" x1="56" y1="30" x2="664" y2="30"/>
-                <line class="mf-staff" x1="56" y1="58" x2="664" y2="58"/>
-                <line class="mf-staff" x1="56" y1="86" x2="664" y2="86"/>
-                <line class="mf-staff" x1="56" y1="114" x2="664" y2="114"/>
-                <line class="mf-staff" x1="56" y1="142" x2="664" y2="142"/>
-                <text class="mf-sname" x="40" y="34" text-anchor="end">D</text>
-                <text class="mf-sname" x="40" y="62" text-anchor="end">B</text>
-                <text class="mf-sname" x="40" y="90" text-anchor="end">G</text>
-                <text class="mf-sname" x="40" y="118" text-anchor="end">D</text>
-                <text class="mf-sname" x="40" y="146" text-anchor="end">g</text>
-                <line class="mf-barline" x1="56" y1="30" x2="56" y2="142"/>
-                <line class="mf-barline" x1="360" y1="30" x2="360" y2="142"/>
-                <line class="mf-barline" x1="662" y1="30" x2="662" y2="142"/>
-                <line class="mf-barline" x1="657" y1="30" x2="657" y2="142"/>
-                <rect class="mf-slab" x="83" y="78" width="14" height="16"/><text class="mf-num" x="90" y="91" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="119" y="50" width="14" height="16"/><text class="mf-num" x="126" y="63" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="155" y="22" width="14" height="16"/><text class="mf-num" x="162" y="35" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="191" y="134" width="14" height="16"/><text class="mf-num" x="198" y="147" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="227" y="78" width="14" height="16"/><text class="mf-num" x="234" y="91" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="263" y="50" width="14" height="16"/><text class="mf-num" x="270" y="63" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="299" y="22" width="14" height="16"/><text class="mf-num" x="306" y="35" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="335" y="134" width="14" height="16"/><text class="mf-num" x="342" y="147" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="367" y="78" width="30" height="16"/><text class="mf-num" x="382" y="91" text-anchor="middle">0h2</text>
-                <rect class="mf-slab" x="407" y="50" width="14" height="16"/><text class="mf-num" x="414" y="63" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="443" y="22" width="14" height="16"/><text class="mf-num" x="450" y="35" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="479" y="134" width="14" height="16"/><text class="mf-num" x="486" y="147" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="515" y="106" width="14" height="16"/><text class="mf-num" x="522" y="119" text-anchor="middle">2</text>
-                <rect class="mf-slab" x="551" y="50" width="14" height="16"/><text class="mf-num" x="558" y="63" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="587" y="22" width="14" height="16"/><text class="mf-num" x="594" y="35" text-anchor="middle">0</text>
-                <rect class="mf-slab" x="623" y="134" width="14" height="16"/><text class="mf-num" x="630" y="147" text-anchor="middle">0</text>
-                <text class="mf-sname" x="90"  y="172" text-anchor="middle">T</text>
-                <text class="mf-sname" x="126" y="172" text-anchor="middle">I</text>
-                <text class="mf-sname" x="162" y="172" text-anchor="middle">M</text>
-                <text class="mf-sname" x="198" y="172" text-anchor="middle">T</text>
-                <text class="mf-sname" x="234" y="172" text-anchor="middle">T</text>
-                <text class="mf-sname" x="270" y="172" text-anchor="middle">I</text>
-                <text class="mf-sname" x="306" y="172" text-anchor="middle">M</text>
-                <text class="mf-sname" x="342" y="172" text-anchor="middle">T</text>
-              </g>
-            </svg>
-          </div>
-
-          <div class="mf-panel">
             <div class="mf-fbhead">
-              <span class="mf-bar" style="margin:0"><span class="mf-pl">{t('music.fact2.fb.label')}</span></span>
+              <span class="mf-bar" style="margin:0;justify-content:flex-start"><span class="mf-pl">{t('music.fact2.fb.label')}</span><span class="mf-pt">{t('music.lh.chord')}</span></span>
               <div class="mf-seg" role="group" aria-label={t('music.fact2.fb.hand.aria')}>
                 <button type="button" class="mf-hand-right" aria-pressed="false">{t('music.fact2.fb.right')}</button>
                 <button type="button" class="mf-hand-left" aria-pressed="true">{t('music.fact2.fb.left')}</button>
@@ -382,7 +340,7 @@ const mf = {
               aria-label={t('music.fact2.fb.aria')}>
               <g class="mf-neckgroup">
                 <!-- stepped fretboard: 4 strings tall up to fret 5, then widens for the 5th string -->
-                <path class="mf-neck" d="M 80 42 L 640 42 L 640 210 L 475 210 L 475 180 L 80 180 Z"/>
+                <path class="mf-neck" d="M 80 42 L 640 42 L 640 210 L 475 210 L 475 172 L 80 172 Z"/>
                 <!-- main nut + frets 1-4 only span the four long strings; the 5th-string
                      lane only exists from fret 5 on, so those frets run full-length -->
                 <rect class="mf-nut" x="75" y="40" width="9" height="132" rx="2"/>
@@ -430,17 +388,20 @@ const mf = {
         <p class="mf-dys-link">{t('music.dystonia.link')}</p>
       </div>
 
-      <!-- string 3 · the scene / memory box (data-k=2) — bands, festivals, camps, projects -->
+      <!-- string 3 · media (data-k=2) — videos & pictures, filled by Alexey -->
       <div class="mf-fp" data-k="2" hidden>
         <p class="mf-fp-h">{t('music.fact2.h')}</p>
-        <p class="mf-ptext">{t('music.scene.body')}</p>
-        <div class="mf-mem">
-          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c1t')}</p><p class="mf-mem-txt">{t('music.scene.c1b')}</p></div>
-          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c2t')}</p><p class="mf-mem-txt">{t('music.scene.c2b')}</p></div>
-          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c3t')}</p><p class="mf-mem-txt">{t('music.scene.c3b')}</p></div>
-          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c4t')}</p><p class="mf-mem-txt">{t('music.scene.c4b')}</p></div>
+        <p class="mf-ptext">{t('music.media.body')}</p>
+        <div class="mf-vids">
+          <figure class="mf-vid">
+            <div class="mf-vid-stage"><span class="mf-vid-soon">{t('music.media.soon')}</span><span class="mf-play" aria-hidden="true"></span></div>
+            <figcaption class="mf-vid-cap">{t('music.media.v1')}</figcaption>
+          </figure>
+          <figure class="mf-vid">
+            <div class="mf-vid-stage"><span class="mf-vid-soon">{t('music.media.soon')}</span><span class="mf-play" aria-hidden="true"></span></div>
+            <figcaption class="mf-vid-cap">{t('music.media.v2')}</figcaption>
+          </figure>
         </div>
-        <p class="mf-soon">{t('music.scene.soon')}</p>
       </div>
     </div>
     </div><!-- /mf-body -->
