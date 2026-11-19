@@ -1,15 +1,29 @@
 ---
 // Persistent header — stays put; only the content below slides.
 // Theming + knob state are driven by the flip controller via [data-side].
+import { useTranslations, localePath, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <header class="topbar" id="topbar" data-side="builder">
   <div class="wrap">
-    <div class="brand">Alexey <b>Chudinov</b> <span class="soul" aria-hidden="true">/ soul.01</span></div>
-    <button class="flip" type="button" data-side="builder" aria-pressed="false" aria-label="Flip to the music side">
-      <span class="flip__end flip__end--l">IT</span>
-      <span class="flip__track" aria-hidden="true"><span class="flip__knob"></span></span>
-      <span class="flip__end flip__end--r">Music</span>
-    </button>
+    <div class="brand">Alexey <b>Chudinov</b> <span class="soul" aria-hidden="true">{t('topbar.soul.builder')}</span></div>
+    <div class="topbar-right">
+      <nav class="langs" aria-label={t('lang.aria')}>
+        <a class="lang" href={localePath('en')} hreflang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="lang" href={localePath('ru')} hreflang="ru" aria-current={lang === 'ru' ? 'true' : undefined}>RU</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="lang" href={localePath('cs')} hreflang="cs" aria-current={lang === 'cs' ? 'true' : undefined}>CZ</a>
+      </nav>
+      <button class="flip" type="button" data-side="builder" aria-pressed="false" aria-label={t('flip.aria.toMusic')}>
+        <span class="flip__end flip__end--l">{t('topbar.side.it')}</span>
+        <span class="flip__track" aria-hidden="true"><span class="flip__knob"></span></span>
+        <span class="flip__end flip__end--r">{t('topbar.side.music')}</span>
+      </button>
+    </div>
   </div>
 </header>

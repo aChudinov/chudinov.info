@@ -33,6 +33,22 @@ html{scroll-padding-top:var(--topbar-h)}
 .topbar[data-side="music"] .brand b{color:#141210}
 .topbar[data-side="music"] .flip{--flip-dim:#a4917a;--flip-on:#141210;--flip-track:#e2d6bd;--flip-trackb:#cebf9f;--kn:#141210;--flip-focus:#8a5a10}
 
+/* right-hand group: language switcher + flip */
+.topbar-right{display:flex;align-items:center;gap:clamp(.7rem,2.2vw,1.25rem)}
+.langs{display:flex;align-items:center;gap:.45rem;
+  font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:.72rem;letter-spacing:.06em}
+.langs .lang{color:#9aa0ac;text-decoration:none;transition:color .3s ease;border-radius:3px}
+.langs .lang:hover{color:#15171c}
+.langs .lang[aria-current="true"]{color:#15171c;font-weight:600}
+.langs .sep{color:#c2c7d0;user-select:none}
+.langs .lang:focus-visible{outline:2.5px solid #2743d6;outline-offset:3px}
+/* music theme for the switcher */
+.topbar[data-side="music"] .langs .lang{color:#b2a388}
+.topbar[data-side="music"] .langs .lang:hover,
+.topbar[data-side="music"] .langs .lang[aria-current="true"]{color:#141210}
+.topbar[data-side="music"] .langs .sep{color:#cebf9f}
+.topbar[data-side="music"] .langs .lang:focus-visible{outline-color:#8a5a10}
+
 /* slider holds the two content faces */
 .slider{position:relative;flex:1 0 auto}
 .slider.is-flipping{position:fixed;left:0;right:0;bottom:0;overflow:hidden;z-index:100} /* top set inline = header height */

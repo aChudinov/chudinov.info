@@ -1,6 +1,11 @@
 ---
 // Builder face — hero, the arc, the machine pipeline, say-hello.
 // CSS kept verbatim under `.bface` and emitted global (it references body.ready / body.is-flipping).
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <div class="face face--builder is-active" data-face="builder">
@@ -9,29 +14,29 @@
       <section class="hero">
         <div class="wrap hero-grid">
           <div class="hero-copy">
-            <h1 class="anim-in">AI architect.<span class="q"> The whole machine — from the browser to the model.</span></h1>
-            <p class="lede anim-in"><b>Alexey Chudinov</b>, based in Prague. Years leading front-end and growing into architecture; now I build with AI at the center — agents, retrieval and pipelines, and the guardrails that keep them honest. I care about the whole system, not one layer.</p>
+            <h1 class="anim-in">{t('hero.h1.main')}<span class="q">{t('hero.h1.q')}</span></h1>
+            <p class="lede anim-in" set:html={t('hero.lede')}></p>
             <div class="cta-row anim-in">
-              <a class="btn btn--primary" href="#contact">Say hello</a>
-              <a class="btn btn--ghost" href="https://www.linkedin.com/in/alexeychudinov/" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="btn btn--primary" href="#contact">{t('hero.cta.sayHello')}</a>
+              <a class="btn btn--ghost" href="https://www.linkedin.com/in/alexeychudinov/" target="_blank" rel="noopener">{t('hero.cta.linkedin')}</a>
             </div>
           </div>
-          <div class="term anim-in" aria-label="Interactive terminal">
+          <div class="term anim-in" aria-label={t('term.aria')}>
             <div class="term-bar">
               <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
-              <span class="term-title">alexey@chudinov — zsh</span>
+              <span class="term-title">{t('term.title')}</span>
             </div>
             <div class="term-body">
               <div class="tln"><span class="pr">$</span> whoami</div>
-              <div class="tln out">alexey chudinov — ai architect</div>
+              <div class="tln out">{t('term.whoami.out')}</div>
               <div class="tln sp"><span class="pr">$</span> cat stack.txt</div>
-              <div class="tln out">front-end → node.js → ai systems</div>
-              <div class="tln sp"><span class="pr">$</span> why are you here?</div>
-              <div class="tln term-menu" role="group" aria-label="Why are you here? Pick one.">
-                <button type="button" class="tmi" data-k="hire" aria-pressed="false"><span class="tk">[1]</span> hire</button>
-                <button type="button" class="tmi" data-k="collab" aria-pressed="false"><span class="tk">[2]</span> collab</button>
-                <button type="button" class="tmi" data-k="curious" aria-pressed="false"><span class="tk">[3]</span> curious</button>
-                <button type="button" class="tmi" data-k="banjo" aria-pressed="false"><span class="tk">[4]</span> banjo</button>
+              <div class="tln out">{t('term.stack.out')}</div>
+              <div class="tln sp"><span class="pr">$</span> {t('term.why')}</div>
+              <div class="tln term-menu" role="group" aria-label={t('term.menu.aria')}>
+                <button type="button" class="tmi" data-k="hire" aria-pressed="false"><span class="tk">[1]</span> {t('term.menu.hire')}</button>
+                <button type="button" class="tmi" data-k="collab" aria-pressed="false"><span class="tk">[2]</span> {t('term.menu.collab')}</button>
+                <button type="button" class="tmi" data-k="curious" aria-pressed="false"><span class="tk">[3]</span> {t('term.menu.curious')}</button>
+                <button type="button" class="tmi" data-k="banjo" aria-pressed="false"><span class="tk">[4]</span> {t('term.menu.banjo')}</button>
               </div>
               <div class="tln term-out" aria-live="polite"><span class="caret"></span></div>
             </div>
@@ -41,31 +46,31 @@
 
       <section id="arc" aria-labelledby="arc-h">
         <div class="wrap reveal">
-          <p class="sec-label">The arc</p>
-          <h2 id="arc-h">One career, built downward through the stack.</h2>
-          <p class="sec-lede">Each layer taught the next. I didn't jump into AI from the outside — I grew into it from the interface down.</p>
+          <p class="sec-label">{t('arc.label')}</p>
+          <h2 id="arc-h">{t('arc.h')}</h2>
+          <p class="sec-lede">{t('arc.lede')}</p>
           <div class="gitlog">
             <p class="gl-cmd"><span class="pr">$</span> git log --oneline --graph career/</p>
             <ol class="gl-list">
               <li class="gl-commit">
                 <span class="gl-graph" aria-hidden="true">*</span>
                 <div class="gl-main">
-                  <p class="gl-head"><span class="gl-hash">7c3e1a2</span> <span class="gl-ref">(front-end)</span> <span class="gl-msg">the interface</span></p>
-                  <p class="gl-body">Years shipping accessible, fast product UI — systems get judged at the edge a person actually touches.</p>
+                  <p class="gl-head"><span class="gl-hash">7c3e1a2</span> <span class="gl-ref">(front-end)</span> <span class="gl-msg">{t('arc.c1.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c1.body')}</p>
                 </div>
               </li>
               <li class="gl-commit">
                 <span class="gl-graph" aria-hidden="true">*</span>
                 <div class="gl-main">
-                  <p class="gl-head"><span class="gl-hash">b4d9f08</span> <span class="gl-ref">(node.js)</span> <span class="gl-msg">the backend</span></p>
-                  <p class="gl-body">Grew into Node and services — APIs, queues, data flow. Learned how state, latency and failure really behave under load.</p>
+                  <p class="gl-head"><span class="gl-hash">b4d9f08</span> <span class="gl-ref">(node.js)</span> <span class="gl-msg">{t('arc.c2.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c2.body')}</p>
                 </div>
               </li>
               <li class="gl-commit">
                 <span class="gl-graph" aria-hidden="true">*</span>
                 <div class="gl-main">
-                  <p class="gl-head"><span class="gl-hash">e2a0c5d</span> <span class="gl-ref gl-ref-head">(HEAD → main, ai-architecture)</span> <span class="gl-msg">the whole machine</span></p>
-                  <p class="gl-body">Now I design AI systems end to end — agents, retrieval, pipelines and evals, with guardrails wired in, not bolted on.</p>
+                  <p class="gl-head"><span class="gl-hash">e2a0c5d</span> <span class="gl-ref gl-ref-head">(HEAD → main, ai-architecture)</span> <span class="gl-msg">{t('arc.c3.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c3.body')}</p>
                 </div>
               </li>
             </ol>
@@ -75,23 +80,23 @@
 
       <section id="machine" class="machine" aria-labelledby="machine-h">
         <div class="wrap reveal">
-          <p class="sec-label">The machine</p>
-          <h2 id="machine-h">A request has to survive the whole path.</h2>
-          <p class="sec-lede">A production AI system is a pipeline, not a prompt. I design every stage of it — and the guardrails between them.</p>
+          <p class="sec-label">{t('machine.label')}</p>
+          <h2 id="machine-h">{t('machine.h')}</h2>
+          <p class="sec-lede">{t('machine.lede')}</p>
           <div class="editor">
             <div class="ed-bar">
               <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
               <span class="ed-file">pipeline.ts</span>
             </div>
-            <ol class="ed-code" aria-label="A typed AI request pipeline: take a request, then retrieve grounding data, reason with tools, guard with validation and evals, and respond — grounded, traceable and in budget. A comment notes: I design the whole machine, not one layer; where it breaks is usually between the stages.">
+            <ol class="ed-code" aria-label={t('machine.code.aria')}>
               <li><span class="kw">export const</span> <span class="fn">answer</span> <span class="op">=</span> <span class="fn">pipeline</span><span class="op">(</span><span class="vr">request</span><span class="op">)</span></li>
-              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">retrieve</span><span class="op">()</span>  <span class="cm">// grounding data, ranked &amp; scoped</span></li>
-              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">reason</span><span class="op">()</span>  <span class="cm">// tools, planning, orchestration</span></li>
-              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">guard</span><span class="op">()</span>  <span class="cm">// validation, evals, safe fallbacks</span></li>
-              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">respond</span><span class="op">()</span>  <span class="cm">// grounded, traceable, in budget</span></li>
+              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">retrieve</span><span class="op">()</span>  <span class="cm">// {t('machine.code.c1')}</span></li>
+              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">reason</span><span class="op">()</span>  <span class="cm">// {t('machine.code.c2')}</span></li>
+              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">guard</span><span class="op">()</span>  <span class="cm">// {t('machine.code.c3')}</span></li>
+              <li><span class="ind">&nbsp;&nbsp;</span><span class="op">.</span><span class="fn">respond</span><span class="op">()</span>  <span class="cm">// {t('machine.code.c4')}</span></li>
               <li>&nbsp;</li>
-              <li><span class="cm">// I design the whole machine, not one layer —</span></li>
-              <li><span class="cm">// where it breaks is usually between the stages.</span></li>
+              <li><span class="cm">// {t('machine.code.c5')}</span></li>
+              <li><span class="cm">// {t('machine.code.c6')}</span></li>
             </ol>
           </div>
         </div>
@@ -99,10 +104,10 @@
 
       <section id="contact" class="contact" aria-labelledby="contact-h">
         <div class="wrap reveal">
-          <p class="sec-label">Say hello</p>
-          <h2 id="contact-h">Always glad to talk systems, AI — or banjo.</h2>
-          <p class="sec-lede">This is my corner of the web, not a sales pitch. If something here resonates, drop a line — or turn the card over.</p>
-          <p class="cform-head"><span class="pr">$</span> compose message <span class="cm">// all three fields, please</span></p>
+          <p class="sec-label">{t('contact.label')}</p>
+          <h2 id="contact-h">{t('contact.h')}</h2>
+          <p class="sec-lede">{t('contact.lede')}</p>
+          <p class="cform-head"><span class="pr">$</span> {t('contact.form.head')} <span class="cm">// {t('contact.form.headNote')}</span></p>
           <form id="contact-form" class="cform" novalidate>
             <div class="field">
               <label for="cf-name"><span class="k">const</span> name <span class="eq">=</span></label>
@@ -118,7 +123,7 @@
             </div>
             <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="cform-actions">
-              <button class="btn btn--primary" type="submit">Send message</button>
+              <button class="btn btn--primary" type="submit">{t('contact.form.send')}</button>
               <p class="form-status" role="status" aria-live="polite"></p>
             </div>
           </form>
@@ -127,8 +132,8 @@
 
       <footer>
         <div class="wrap">
-          <span>chudinov.info</span>
-          <span>soul.01 — IT</span>
+          <span>{t('footer.site')}</span>
+          <span>{t('footer.builder')}</span>
         </div>
       </footer>
     </main>

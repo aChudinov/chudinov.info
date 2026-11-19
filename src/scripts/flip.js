@@ -2,10 +2,14 @@
   var KEY='chudinov-side';
   var EASE='cubic-bezier(.16,1,.3,1)';
   var DUR=600;
-  var TITLES={
+  // localized strings injected by Base.astro (window.__I18N__); fall back to English
+  var I18N = window.__I18N__ || {};
+  var TITLES = I18N.title || {
     builder:'Alexey Chudinov — full-stack AI architect',
     music:'Alexey Chudinov — banjo, relearning left-handed'
   };
+  var SOUL = I18N.soul || { builder:'/ soul.01', music:'/ soul.02' };
+  var FLIP_ARIA = I18N.flipAria || { toMusic:'Flip to the music side', toIt:'Flip to the IT side' };
   var stage=document.getElementById('stage');
   var topbar=document.getElementById('topbar');
   var slider=document.getElementById('slider');
@@ -15,6 +19,7 @@
     music:stage.querySelector('.face--music')
   };
   var switches=[].slice.call(document.querySelectorAll('.flip'));
+  var langLinks=[].slice.call(document.querySelectorAll('.lang'));
   var animating=false;
 
   function reduced(){ try{ return matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } }
@@ -31,9 +36,17 @@
     switches.forEach(function(b){
       b.dataset.side=side;                       // drives knob + label emphasis
       b.setAttribute('aria-pressed', side==='music' ? 'true':'false');
-      b.setAttribute('aria-label', side==='builder'
-        ? 'Flip to the music side'
-        : 'Flip to the IT side');
+      b.setAttribute('aria-label', side==='builder' ? FLIP_ARIA.toMusic : FLIP_ARIA.toIt);
+    });
+  }
+
+  // keep the language links pointing at the current side, so switching language
+  // across the (full) page reload lands the visitor back on the same face
+  function syncLangLinks(side){
+    var h='#'+hashFor(side);
+    langLinks.forEach(function(a){
+      var base=(a.getAttribute('href')||'').split('#')[0];
+      a.setAttribute('href', base+h);
     });
   }
 
@@ -42,9 +55,10 @@
     stage.dataset.side=side;
     document.documentElement.dataset.side=side;   // stable backdrop color-morphs in place
     if(topbar) topbar.dataset.side=side;
-    if(soulLabel) soulLabel.textContent = side==='music' ? '/ soul.02' : '/ soul.01';
+    if(soulLabel) soulLabel.textContent = side==='music' ? SOUL.music : SOUL.builder;
     document.title=TITLES[side];
     syncSwitches(side);
+    syncLangLinks(side);
   }
 
   function clearInline(el){

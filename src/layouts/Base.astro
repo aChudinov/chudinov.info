@@ -1,26 +1,65 @@
 ---
 import '../styles/global.css';
+import { useTranslations, localePath, type Lang } from '../i18n/utils';
 
-const title = 'Alexey Chudinov — full-stack AI architect';
-const description =
-  'Alexey Chudinov — full-stack AI architect in Prague, and a 5-string bluegrass banjo player relearning the instrument left-handed.';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const SITE = 'https://chudinov.info';
+const title = t('meta.title.builder');
+const description = t('meta.description');
+const canonical = SITE + localePath(lang);
+
+// strings the client scripts need (flip.js, enhance.js) — single source of truth
+const clientI18n = {
+  title: { builder: t('meta.title.builder'), music: t('meta.title.music') },
+  soul: { builder: t('topbar.soul.builder'), music: t('topbar.soul.music') },
+  flipAria: { toMusic: t('flip.aria.toMusic'), toIt: t('flip.aria.toIt') },
+  term: {
+    hire: t('term.resp.hire'),
+    collab: t('term.resp.collab'),
+    curious: t('term.resp.curious'),
+    banjo: t('term.resp.banjo'),
+  },
+  status: {
+    incomplete: t('status.incomplete'),
+    mailto: t('status.mailto'),
+    sending: t('status.sending'),
+    sent: t('status.sent'),
+    errGeneric: t('status.errGeneric'),
+    errNetwork: t('status.errNetwork'),
+  },
+  mailtoSubject: t('contact.mailto.subject'),
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#eef0f3" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={SITE + localePath('en')} />
+    <link rel="alternate" hreflang="ru" href={SITE + localePath('ru')} />
+    <link rel="alternate" hreflang="cs" href={SITE + localePath('cs')} />
+    <link rel="alternate" hreflang="x-default" href={SITE + localePath('en')} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://chudinov.info/" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <!-- strings the client scripts read; set before any module script runs -->
+    <script is:inline define:vars={{ clientI18n, lang }}>
+      window.__I18N__ = clientI18n;
+      window.__LANG__ = lang;
+    </script>
     <!-- set the backdrop side before first paint, so the page opens in the right world with no flash -->
     <script is:inline>
       (function () {

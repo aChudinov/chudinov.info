@@ -1,0 +1,27 @@
+---
+// The whole page, parameterised by locale. index.astro renders it for English;
+// [lang]/index.astro renders it for ru/cs. One tree, no duplicated markup.
+import Base from '../layouts/Base.astro';
+import TopBar from './TopBar.astro';
+import BuilderFace from './BuilderFace.astro';
+import MusicFace from './MusicFace.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+
+<Base lang={lang}>
+  <div class="stage" id="stage" data-side="builder">
+    <TopBar lang={lang} />
+    <div class="slider" id="slider">
+      <BuilderFace lang={lang} />
+      <MusicFace lang={lang} />
+    </div>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/flip.js';
+  import '../scripts/enhance.js';
+</script>

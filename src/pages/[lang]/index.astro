@@ -1,0 +1,13 @@
+---
+import Site from '../../components/Site.astro';
+import type { Lang } from '../../i18n/utils';
+
+// only the non-default locales get a prefixed route; English stays at the root
+export function getStaticPaths() {
+  return [{ params: { lang: 'ru' } }, { params: { lang: 'cs' } }];
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<Site lang={lang} />

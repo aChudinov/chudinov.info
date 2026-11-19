@@ -27,6 +27,18 @@
   var ACCESS_KEY = ''; // <-- paste the Web3Forms access key (registered to the destination inbox)
   var FALLBACK_TO = ['choudalex', 'gmail.com'].join('@'); // interim mailto target; not rendered as text
 
+  // localized copy (window.__I18N__, injected by Base.astro); English fallback
+  var I18N = window.__I18N__ || {};
+  var STATUS = I18N.status || {
+    incomplete: 'Please complete the fields above.',
+    mailto: 'Opening your email app with the message ready to send…',
+    sending: 'Sending…',
+    sent: 'Thanks — your message is on its way.',
+    errGeneric: 'Something went wrong. Please try again, or email me via LinkedIn.',
+    errNetwork: 'Could not reach the server. Please try again in a moment.'
+  };
+  var SUBJECT = I18N.mailtoSubject || 'chudinov.info — message from ';
+
   var form = document.getElementById('contact-form');
   if (!form) return;
   var status = form.querySelector('.form-status');
@@ -49,9 +61,9 @@
   }
 
   function mailtoFallback(v) {
-    var subject = encodeURIComponent('chudinov.info — message from ' + v.name);
+    var subject = encodeURIComponent(SUBJECT + v.name);
     var body = encodeURIComponent(v.message + '\n\n— ' + v.name + '\n' + v.email);
-    setStatus('Opening your email app with the message ready to send…');
+    setStatus(STATUS.mailto);
     window.location.href = 'mailto:' + FALLBACK_TO + '?subject=' + subject + '&body=' + body;
   }
 
@@ -59,7 +71,7 @@
     e.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
-      setStatus('Please complete the fields above.', 'error');
+      setStatus(STATUS.incomplete, 'error');
       return;
     }
     var v = values();
@@ -68,13 +80,13 @@
     if (!ACCESS_KEY) { mailtoFallback(v); return; }
 
     if (button) button.disabled = true;
-    setStatus('Sending…');
+    setStatus(STATUS.sending);
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         access_key: ACCESS_KEY,
-        subject: 'chudinov.info — message from ' + v.name,
+        subject: SUBJECT + v.name,
         from_name: v.name,
         name: v.name,
         email: v.email,
@@ -86,13 +98,13 @@
       .then(function (data) {
         if (data && data.success) {
           form.reset();
-          setStatus('Thanks — your message is on its way.');
+          setStatus(STATUS.sent);
         } else {
-          setStatus('Something went wrong. Please try again, or email me via LinkedIn.', 'error');
+          setStatus(STATUS.errGeneric, 'error');
         }
       })
       .catch(function () {
-        setStatus('Could not reach the server. Please try again in a moment.', 'error');
+        setStatus(STATUS.errNetwork, 'error');
       })
       .finally(function () { if (button) button.disabled = false; });
   });
@@ -104,7 +116,7 @@
   var out = document.querySelector('.term-out');
   if (!menu || !out) return;
   var items = [].slice.call(menu.querySelectorAll('.tmi'));
-  var RESP = {
+  var RESP = (window.__I18N__ && window.__I18N__.term) || {
     hire:    'open to the right role — say hello below ↓',
     collab:  'love a good problem — the form is just below ↓',
     curious: 'make yourself at home. scroll on ↓',

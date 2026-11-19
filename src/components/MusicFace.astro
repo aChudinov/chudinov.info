@@ -3,6 +3,19 @@
 // Astro leaves it untouched). The 5 strings are the page MENU; each plucks to a
 // fact. A generic intro shows by default. The fretboard+tab is one fact ("the
 // neck"); other facts use distinct non-musical presentations (placeholders for now).
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// strings the inline IIFE needs (is:inline can't read `t()`, so pass via define:vars)
+const mf = {
+  factTitles: [t('music.fact0.h'), t('music.fact1.h'), t('music.fact2.h'), t('music.fact3.h'), t('music.fact4.h')],
+  pluckAria: t('music.string.aria'),
+  captionLeft: t('music.fact2.caption.left'),
+  captionRight: t('music.fact2.caption.right'),
+};
 ---
 
 <div class="face face--music is-hidden" data-face="music" inert>
@@ -153,15 +166,15 @@
   </style>
 
   <div class="mf-wrap">
-    <h2 class="mf-title">The musician<span class="mf-amp">.</span></h2>
+    <h2 class="mf-title">{t('music.title.main')}<span class="mf-amp">.</span></h2>
 
     <div class="mf-body">
     <!-- BANJO INSTRUMENT MENU (left on desktop, hero on mobile) -->
     <div class="mf-menu">
-      <p class="mf-menu-hint">// pluck a string</p>
+      <p class="mf-menu-hint">{t('music.menuHint')}</p>
       <div class="mf-instr">
         <svg class="mf-instr-svg" viewBox="80 44 240 636" role="group"
-          aria-label="A stylized close-up of a five-string banjo: steel strings running over a wooden bridge and down to a flat-gray tailpiece on a cream drum head. Pluck a string to pull up a fact.">
+          aria-label={t('music.instr.aria')}>
           <g class="mf-assembly">
             <g class="mf-g-bridge"></g>
             <g class="mf-g-strings"></g>
@@ -175,36 +188,32 @@
     <div class="mf-stage" aria-live="polite">
       <!-- default: generic intro -->
       <div class="mf-fp mf-fp-intro" data-k="default">
-        <p class="mf-lede">
-          Right-handed, until <span class="mf-hl">focal dystonia</span> closed that hand on the strings.
-          So I turned the banjo over and started again, left-handed — new hand, same tunes,
-          slower and truer. The relearning isn't a footnote. It <span class="mf-hl">is</span> the music now.
-        </p>
-        <p class="mf-hint">pluck a string to pull up a fact →</p>
+        <p class="mf-lede" set:html={t('music.intro')}></p>
+        <p class="mf-hint">{t('music.intro.hint')}</p>
       </div>
 
       <!-- k=0 · the count (stat) [PLACEHOLDER] -->
       <div class="mf-fp" data-k="0" hidden>
-        <p class="mf-fp-h">the count</p>
-        <div class="mf-stat"><span class="mf-stat-num">100%</span><span class="mf-stat-unit">left-handed</span></div>
-        <p class="mf-stat-label">Everything I play now, I play on the other side of the instrument.</p>
+        <p class="mf-fp-h">{t('music.fact0.h')}</p>
+        <div class="mf-stat"><span class="mf-stat-num">100%</span><span class="mf-stat-unit">{t('music.fact0.unit')}</span></div>
+        <p class="mf-stat-label">{t('music.fact0.label')}</p>
       </div>
 
       <!-- k=1 · progress (bar) [PLACEHOLDER] -->
       <div class="mf-fp" data-k="1" hidden>
-        <p class="mf-fp-h">progress</p>
+        <p class="mf-fp-h">{t('music.fact1.h')}</p>
         <div class="mf-bar2"><div class="mf-bar2-fill" style="width:64%"></div></div>
-        <p class="mf-fp-sub">Rebuilding the roll, note by note. Not done — that's rather the point.</p>
+        <p class="mf-fp-sub">{t('music.fact1.sub')}</p>
       </div>
 
       <!-- k=2 · the neck (tablature + fretboard) -->
       <div class="mf-fp" data-k="2" hidden>
-        <p class="mf-fp-h">the neck</p>
+        <p class="mf-fp-h">{t('music.fact2.h')}</p>
         <div class="mf-score">
           <div class="mf-panel">
-            <div class="mf-bar"><span class="mf-pl">tablature</span><span class="mf-pt">forward roll · open G</span></div>
+            <div class="mf-bar"><span class="mf-pl">{t('music.fact2.tab.label')}</span><span class="mf-pt">{t('music.fact2.tab.tag')}</span></div>
             <svg class="mf-tab" viewBox="0 0 680 184" role="img"
-              aria-label="Five-string banjo tablature: a forward roll in open G over two measures. Strings top to bottom are D, B, G, D and the short fifth string g. The fifth string sounds open throughout; the second measure adds a hammer-on from open to the second fret on the G string.">
+              aria-label={t('music.fact2.tab.aria')}>
               <g aria-hidden="true">
                 <text class="mf-clef" x="16" y="42">T</text>
                 <text class="mf-clef" x="16" y="78">A</text>
@@ -253,14 +262,14 @@
 
           <div class="mf-panel">
             <div class="mf-fbhead">
-              <span class="mf-bar" style="margin:0"><span class="mf-pl">fretboard</span></span>
-              <div class="mf-seg" role="group" aria-label="Playing hand">
-                <button type="button" class="mf-hand-right" aria-pressed="false">Right</button>
-                <button type="button" class="mf-hand-left" aria-pressed="true">Left</button>
+              <span class="mf-bar" style="margin:0"><span class="mf-pl">{t('music.fact2.fb.label')}</span></span>
+              <div class="mf-seg" role="group" aria-label={t('music.fact2.fb.hand.aria')}>
+                <button type="button" class="mf-hand-right" aria-pressed="false">{t('music.fact2.fb.right')}</button>
+                <button type="button" class="mf-hand-left" aria-pressed="true">{t('music.fact2.fb.left')}</button>
               </div>
             </div>
             <svg class="mf-fret mf-left mf-fretboard" viewBox="0 0 680 230" role="img"
-              aria-label="A five-string banjo neck diagram. Four long strings run the length of the neck; the short fifth string begins at the fifth fret. One finger is at the second fret of the G string; the other strings ring open. The diagram mirrors between right- and left-handed.">
+              aria-label={t('music.fact2.fb.aria')}>
               <g class="mf-neckgroup">
                 <rect class="mf-neck" x="80" y="40" width="552" height="150" rx="4"/>
                 <rect class="mf-nut" x="76" y="38" width="8" height="154" rx="2"/>
@@ -292,47 +301,47 @@
                 <text class="mf-fname-side" x="40" y="206" text-anchor="middle">g</text>
               </g>
             </svg>
-            <p class="mf-fbcaption"><b>Left-handed</b> — how I play now. Flip it to see where I started.</p>
+            <p class="mf-fbcaption" set:html={t('music.fact2.caption.left')}></p>
           </div>
         </div>
       </div>
 
       <!-- k=3 · right now (terminal) [PLACEHOLDER] -->
       <div class="mf-fp" data-k="3" hidden>
-        <p class="mf-fp-h">right now</p>
+        <p class="mf-fp-h">{t('music.fact3.h')}</p>
         <div class="mf-term">
-          <div><span class="mf-pr">$</span> now-practicing</div>
-          <div>forward rolls · open G · slow and clean</div>
-          <div><span class="mf-dim"># most mornings, before the code</span></div>
+          <div><span class="mf-pr">$</span> {t('music.fact3.line1')}</div>
+          <div>{t('music.fact3.line2')}</div>
+          <div><span class="mf-dim"># {t('music.fact3.line3')}</span></div>
         </div>
       </div>
 
       <!-- k=4 · influences (tags) [PLACEHOLDER] -->
       <div class="mf-fp" data-k="4" hidden>
-        <p class="mf-fp-h">influences</p>
+        <p class="mf-fp-h">{t('music.fact4.h')}</p>
         <div class="mf-tags">
-          <span class="mf-chip">Scruggs style</span>
-          <span class="mf-chip">the forward roll</span>
-          <span class="mf-chip">open G</span>
-          <span class="mf-chip">bluegrass</span>
-          <span class="mf-chip">one more tune</span>
+          <span class="mf-chip">{t('music.fact4.chip1')}</span>
+          <span class="mf-chip">{t('music.fact4.chip2')}</span>
+          <span class="mf-chip">{t('music.fact4.chip3')}</span>
+          <span class="mf-chip">{t('music.fact4.chip4')}</span>
+          <span class="mf-chip">{t('music.fact4.chip5')}</span>
         </div>
       </div>
     </div>
     </div><!-- /mf-body -->
 
     <!-- mobile only: "da capo" — the sheet-music instruction to return to the top -->
-    <button type="button" class="mf-dacapo" aria-label="Da capo — scroll back to the top">
+    <button type="button" class="mf-dacapo" aria-label={t('music.dacapo.aria')}>
       <svg class="mf-dc-sign" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/>
         <line x1="12" y1="1.5" x2="12" y2="22.5" stroke="currentColor" stroke-width="1.6"/>
         <line x1="1.5" y1="12" x2="22.5" y2="12" stroke="currentColor" stroke-width="1.6"/>
       </svg>
-      <span class="mf-dc-text"><span class="mf-dc-main">da&nbsp;capo</span><span class="mf-dc-sub">D.C. — back to the top</span></span>
+      <span class="mf-dc-text"><span class="mf-dc-main">{t('music.dacapo.main')}</span><span class="mf-dc-sub">{t('music.dacapo.sub')}</span></span>
     </button>
   </div>
 
-  <script is:inline>
+  <script is:inline define:vars={{ mf }}>
   (function(){
     var root = document.querySelector('.mface');
     if (!root || root.dataset.mfInit) return;
@@ -370,7 +379,7 @@
     var TSPREAD = 17;            // tail spread
     var TOP = 70;                // playing length
     var GAUGE = [1.3, 2.0, 2.8, 4.0, 1.3]; // 1st & 5th thinnest, 4th wound-thick
-    var TITLES = ['the count', 'progress', 'the neck', 'right now', 'influences'];
+    var TITLES = mf.factTitles;  // fact names (localized, passed from the frontmatter)
     var strGroups = [];
 
     function el(name, attrs){ var e = document.createElementNS(NS, name); for (var a in attrs){ e.setAttribute(a, attrs[a]); } return e; }
@@ -415,7 +424,7 @@
         var xa = CX + (i - 2) * TSPREAD;
         var mid = (TOP + BRIDGEY) / 2;
         var g = el('g', { 'class':'mf-istring', 'tabindex':'0', 'role':'button', 'aria-pressed':'false',
-          'aria-label':'Pluck string ' + (i + 1) + ' — ' + TITLES[i] });
+          'aria-label': mf.pluckAria.replace('{n}', i + 1).replace('{title}', TITLES[i]) });
         // wider invisible hit area over the whole string (centre extends past the tuck)
         var hitPts = xt + ',' + TOP + ' ' + xt + ',' + BRIDGEY + ' ' + xa + ',' + TAILY;
         if (i === 2) hitPts += ' ' + xa + ',' + (TAILY + 16);
@@ -516,9 +525,7 @@
       fb.classList.toggle('mf-left', left);
       bL.setAttribute('aria-pressed', String(left));
       bR.setAttribute('aria-pressed', String(!left));
-      cap.innerHTML = left
-        ? '<b>Left-handed</b> — how I play now. Flip it to see where I started.'
-        : '<b>Right-handed</b> — where I started, before focal dystonia. Flip it back to now.';
+      cap.innerHTML = left ? mf.captionLeft : mf.captionRight;
     }
     bR.addEventListener('click', function(){ setHand(false); });
     bL.addEventListener('click', function(){ setHand(true); });
@@ -527,8 +534,8 @@
 </section>
   <footer class="mfoot">
     <div class="mfoot-wrap">
-      <span>chudinov.info</span>
-      <span>soul.02 — music</span>
+      <span>{t('footer.site')}</span>
+      <span>{t('footer.music')}</span>
     </div>
   </footer>
 </div>
