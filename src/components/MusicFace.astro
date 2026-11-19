@@ -57,10 +57,27 @@
   /* no box outline on the string button — the wire colour is the focus/press cue */
   .mface .mf-istring:focus{outline:none}
 
+  /* "da capo" — mobile-only return-to-top; desktop hides it (no scroll there) */
+  .mface .mf-dacapo{display:none}
+
   /* mobile: the banjo becomes a near-full-screen vertical hero at the top */
   @media(max-width:759px){
     .mface .mf-instr{height:min(82vh,640px);width:auto;max-width:94vw}
     .mface .mf-menu-hint{text-align:center}
+    .mface .mf-dacapo{
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;margin:2.6rem 0 0;padding:1.5rem 1rem 0.4rem;
+      appearance:none;background:transparent;border:0;border-top:1px solid var(--mf-paper-line);
+      color:var(--mf-accent-ink);cursor:pointer;transition:opacity .2s ease,transform .2s var(--mf-ease);
+    }
+    .mface .mf-dacapo .mf-dc-sign{width:1.5rem;height:1.5rem;flex:none}
+    .mface .mf-dacapo .mf-dc-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
+    .mface .mf-dacapo .mf-dc-main{font-family:var(--mf-mono);font-weight:700;font-size:.98rem;letter-spacing:.04em}
+    .mface .mf-dacapo .mf-dc-sub{font-family:var(--mf-mono);font-size:.72rem;letter-spacing:.06em;color:var(--mf-on-paper-soft)}
+    .mface .mf-dacapo:active{opacity:.6;transform:translateY(-1px)}
+  }
+  @media(max-width:759px) and (prefers-reduced-motion:reduce){
+    .mface .mf-dacapo{transition:none}
   }
 
   /* ---- fact stage ---- */
@@ -303,6 +320,16 @@
       </div>
     </div>
     </div><!-- /mf-body -->
+
+    <!-- mobile only: "da capo" — the sheet-music instruction to return to the top -->
+    <button type="button" class="mf-dacapo" aria-label="Da capo — scroll back to the top">
+      <svg class="mf-dc-sign" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <line x1="12" y1="1.5" x2="12" y2="22.5" stroke="currentColor" stroke-width="1.6"/>
+        <line x1="1.5" y1="12" x2="22.5" y2="12" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+      <span class="mf-dc-text"><span class="mf-dc-main">da&nbsp;capo</span><span class="mf-dc-sub">D.C. — back to the top</span></span>
+    </button>
   </div>
 
   <script is:inline>
@@ -465,6 +492,15 @@
     if (svg && gStrings && gBridge && gTail && assembly){
       gTail.setAttribute('pointer-events', 'none'); // let string clicks pass through the tailpiece
       draw();
+    }
+
+    // ---- "da capo": scroll back to the top (mobile) ----
+    var dacapo = root.querySelector('.mf-dacapo');
+    if (dacapo){
+      dacapo.addEventListener('click', function(){
+        try { window.scrollTo({ top: 0, left: 0, behavior: REDUCE ? 'auto' : 'smooth' }); }
+        catch (e){ window.scrollTo(0, 0); }
+      });
     }
 
     // ---- fretboard right/left toggle (inside the "the neck" fact) ----
