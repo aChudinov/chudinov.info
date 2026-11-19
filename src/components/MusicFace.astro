@@ -147,6 +147,13 @@ const mf = {
   .mface .mf-play::before{content:"";border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent #1b1712;margin-left:3px}
   .mface .mf-vid-soon{position:absolute;top:.6rem;right:.6rem;font-family:var(--mf-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mf-on-ink);background:rgba(20,18,16,.5);padding:.2rem .5rem;border-radius:999px}
   .mface .mf-vid-cap{margin:0;padding:.65rem .8rem;font-family:var(--mf-mono);font-size:.74rem;color:var(--mf-on-paper-soft);background:var(--mf-paper);border-top:1px solid var(--mf-paper-line)}
+  /* YouTube facade: self-hosted poster + play; the iframe loads only on click */
+  .mface .mf-yt{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+  .mface .mf-yt-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .mface .mf-yt .mf-play{position:relative;z-index:1;transition:transform .2s var(--mf-ease),background .2s ease}
+  .mface .mf-yt:hover .mf-play{transform:scale(1.08);background:#fff}
+  .mface .mf-yt:focus-visible{outline:2.5px solid var(--mf-accent-ink);outline-offset:-3px}
+  .mface .mf-yt-frame{position:absolute;inset:0;width:100%;height:100%;border:0}
 
   /* the scene: memory-box card grid */
   .mface .mf-mem{display:grid;gap:.9rem;margin:1.5rem 0 0}
@@ -277,7 +284,15 @@ const mf = {
             <figcaption class="mf-vid-cap">{t('music.family.v1')}</figcaption>
           </figure>
           <figure class="mf-vid">
-            <div class="mf-vid-stage"><span class="mf-vid-soon">{t('music.family.soon')}</span><span class="mf-play" aria-hidden="true"></span></div>
+            <div class="mf-vid-stage">
+              <button type="button" class="mf-yt" data-yt="3H8U1O9GvkE" aria-label="Play my father playing guitar — 1995 TV broadcast (opens a YouTube player)">
+                <picture>
+                  <source srcset="/img/father-guitar.webp" type="image/webp" />
+                  <img class="mf-yt-poster" src="/img/father-guitar.jpg" width="640" height="360" loading="lazy" decoding="async" alt="My father playing guitar on a 1995 TV broadcast." />
+                </picture>
+                <span class="mf-play" aria-hidden="true"></span>
+              </button>
+            </div>
             <figcaption class="mf-vid-cap">{t('music.family.v2')}</figcaption>
           </figure>
         </div>
@@ -582,6 +597,21 @@ const mf = {
       gTail.setAttribute('pointer-events', 'none'); // let string clicks pass through the tailpiece
       draw();
     }
+
+    // ---- YouTube facades: load the iframe only on click (privacy + perf) ----
+    [].slice.call(root.querySelectorAll('.mf-yt')).forEach(function(b){
+      b.addEventListener('click', function(){
+        var stage = b.parentElement;
+        var f = document.createElement('iframe');
+        f.className = 'mf-yt-frame';
+        f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&rel=0';
+        f.title = b.getAttribute('aria-label') || 'YouTube video';
+        f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+        f.setAttribute('allowfullscreen', '');
+        stage.appendChild(f);
+        b.remove();
+      });
+    });
 
     // ---- "da capo": scroll back to the top (mobile) ----
     var dacapo = root.querySelector('.mf-dacapo');
