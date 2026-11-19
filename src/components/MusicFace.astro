@@ -392,10 +392,13 @@
     }
 
     function selectFact(k, btn){
-      current = k; show(k);
-      strGroups.forEach(function(g){ g.setAttribute('aria-pressed', g === btn ? 'true' : 'false'); });
-      // mobile: the content panel sits below the hero — scroll down to it
-      if (mqMobile.matches && stage){
+      // plucking the already-active string again exits back to the default intro
+      var toDefault = (current === k);
+      current = toDefault ? 'default' : k;
+      show(current);
+      strGroups.forEach(function(g){ g.setAttribute('aria-pressed', (!toDefault && g === btn) ? 'true' : 'false'); });
+      // mobile: the content panel sits below the hero — scroll down to it (not when exiting)
+      if (!toDefault && mqMobile.matches && stage){
         try { stage.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block: 'start' }); }
         catch(e){ stage.scrollIntoView(); }
       }
