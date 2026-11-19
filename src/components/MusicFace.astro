@@ -224,6 +224,7 @@ const mf = {
   .mface .mf-string.mf-wound{stroke-width:2}
   .mface .mf-inlay{fill:var(--mf-on-paper-soft);opacity:.5}
   .mface .mf-open-mark{fill:none;stroke:var(--mf-on-paper);stroke-width:1.5}
+  .mface .mf-string-nut{fill:var(--mf-on-paper)}
   .mface .mf-finger{fill:var(--mf-accent)}
   .mface .mf-fingnum{font-family:var(--mf-mono);font-size:13px;font-weight:700;fill:#fff;text-anchor:middle}
   /* keep finger numbers readable when the neck is mirrored for left-handed */
@@ -381,11 +382,13 @@ const mf = {
               aria-label={t('music.fact2.fb.aria')}>
               <g class="mf-neckgroup">
                 <rect class="mf-neck" x="80" y="42" width="560" height="168" rx="4"/>
-                <rect class="mf-nut" x="75" y="40" width="9" height="172" rx="2"/>
-                <line class="mf-fretline" x1="159" y1="46" x2="159" y2="206"/>
-                <line class="mf-fretline" x1="238" y1="46" x2="238" y2="206"/>
-                <line class="mf-fretline" x1="317" y1="46" x2="317" y2="206"/>
-                <line class="mf-fretline" x1="396" y1="46" x2="396" y2="206"/>
+                <!-- main nut + frets 1-4 only span the four long strings; the 5th-string
+                     lane only exists from fret 5 on, so those frets run full-length -->
+                <rect class="mf-nut" x="75" y="40" width="9" height="132" rx="2"/>
+                <line class="mf-fretline" x1="159" y1="46" x2="159" y2="172"/>
+                <line class="mf-fretline" x1="238" y1="46" x2="238" y2="172"/>
+                <line class="mf-fretline" x1="317" y1="46" x2="317" y2="172"/>
+                <line class="mf-fretline" x1="396" y1="46" x2="396" y2="172"/>
                 <line class="mf-fretline" x1="475" y1="46" x2="475" y2="206"/>
                 <line class="mf-fretline" x1="554" y1="46" x2="554" y2="206"/>
                 <!-- strings: even spacing (36u), per-string gauges from the banjo menu -->
@@ -394,8 +397,8 @@ const mf = {
                 <line class="mf-string" x1="80" y1="126" x2="640" y2="126" style="stroke-width:2.8"/>
                 <line class="mf-string" x1="80" y1="162" x2="640" y2="162" style="stroke-width:4"/>
                 <line class="mf-string" x1="475" y1="198" x2="640" y2="198" style="stroke-width:1.3"/>
-                <!-- open strings: hollow circle at the string's nut (5th string starts at fret 5) -->
-                <circle class="mf-open-mark" cx="475" cy="198" r="6.5"/>
+                <!-- the 5th string's nut: a solid dark dot where the short string begins (fret 5) -->
+                <circle class="mf-string-nut" cx="475" cy="198" r="6.5"/>
                 <!-- F major: 1st→3, 2nd→1, 3rd→2, 4th→3 (fingers 4/1/2/3) -->
                 <circle class="mf-finger" cx="277" cy="54"  r="12.5"/>
                 <circle class="mf-finger" cx="120" cy="90"  r="12.5"/>
