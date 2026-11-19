@@ -31,32 +31,51 @@ export const cs = {
   'term.aria': 'Interaktivní terminál',
   'term.title': 'alexey@chudinov — zsh',
   'term.whoami.out': 'alexey chudinov — ai architekt',
-  'term.stack.out': 'front-end → node.js → ai systémy',
+  'term.uptime.out': 'běžím od roku 2002 — dělám web',
+  'term.stack.out': 'front-end, node.js → full-stack → architekt → ai systémy',
   'term.why': 'proč jsi tady?',
   'term.menu.aria': 'Proč jsi tady? Vyber jednu možnost.',
   'term.menu.hire': 'najmout',
   'term.menu.collab': 'spolupráce',
   'term.menu.curious': 'zvědavost',
   'term.menu.banjo': 'banjo',
-  'term.resp.hire': 'otevřený té správné roli — napiš níž ↓',
+  'term.resp.hire': 'teď práci nehledám — ale dobré konverzaci se nebráním ↓',
   'term.resp.collab': 'mám rád dobrý problém — formulář je hned níž ↓',
   'term.resp.curious': 'udělej si pohodlí. scrolluj dál ↓',
   'term.resp.banjo': 'špatná duše — klikni na HUDBA vpravo nahoře ♪',
 
   // ---- builder · the arc ----
   'arc.label': 'Dráha',
-  'arc.h': 'Jedna kariéra, stavěná směrem dolů skrz stack.',
+  'arc.h': 'Jedna kariéra, commity od roku 2002.',
   'arc.lede':
-    'Každá vrstva učila tu další. Do AI jsem nevkročil zvenčí — dorostl jsem do ní shora dolů, od rozhraní.',
-  'arc.c1.msg': 'rozhraní',
+    'Ne přímka — větví se a merguje. Web, oklika přes materiálové inženýrství a výzkum, zpátky k webu — a teď AI. Každý krok se pořád kompiluje do toho, co dělám dnes.',
+  'arc.c1.msg': 'první kontakt — html a javascript',
   'arc.c1.body':
-    'Roky dodávání přístupného, rychlého produktového UI — systém se soudí na hraně, které se člověk skutečně dotýká.',
-  'arc.c2.msg': 'backend',
+    'Web jsem se naučil sám, jaký tehdy byl — view-source, tabulky, inline skripty. Jiskra, která nikdy úplně nezhasla.',
+  'arc.c2.msg': 'materiálové inženýrství na BMSTU',
   'arc.c2.body':
-    'Dorostl jsem do Node a služeb — API, fronty, tok dat. Pochopil jsem, jak se stav, latence a chyby chovají pod zátěží.',
-  'arc.c3.msg': 'celý stroj',
+    'Odbočil jsem do vlastní větve — materiálové inženýrství na Baumanově moskevské státní technické univerzitě, úplná oklika od kódu.',
+  'arc.c3.msg': 'seniorní výzkumný inženýr · patent',
   'arc.c3.body':
-    'Teď navrhuji AI systémy od začátku do konce — agenti, retrieval, pipeliny a evaly, s mantinely zabudovanými uvnitř, ne přišroubovanými navrch.',
+    'Pracoval jsem jako seniorní výzkumný inženýr a získal patent. Roky myšlení v systémech, důkazech a tolerancích.',
+  'arc.c4.msg': 'merge: zpátky k webu',
+  'arc.c4.body':
+    'Zmergoval jsem tu okliku zpět a vrátil se k webovému vývoji natrvalo — roky výzkumu ze mě udělaly ostřejšího inženýra.',
+  'arc.c5.msg': 'druhý titul — informatika',
+  'arc.c5.body':
+    'Získal jsem druhý titul z informatiky na Lomonosovově moskevské státní univerzitě — přední univerzitě země.',
+  'arc.c6.msg': 'inženýrství ve velkém',
+  'arc.c6.body':
+    'Front-end v předních firmách, mezi nimi Yandex. Naučil jsem se, jak se rozhraní chovají při reálných uživatelích a reálném provozu.',
+  'arc.c7.msg': 'nová země, vyšší sázky',
+  'arc.c7.body':
+    'Přestěhoval jsem se do Česka a stavěl ve fintechu — kde správnost, latence a důvěra nejsou volitelné.',
+  'arc.c8.msg': 'v čele vývoje AI',
+  'arc.c8.body':
+    'Teď vedu vývoj AI v Zenoo — agenti, retrieval, pipeliny a mantinely kolem nich.',
+  'arc.c9.msg': 'vlastní projekty',
+  'arc.c9.body':
+    'Větev, která se nikdy nemerguje: pár vlastních projektů, které si vedu ve volném čase — pořád se něco staví.',
 
   // ---- builder · the machine ----
   'machine.label': 'Stroj',

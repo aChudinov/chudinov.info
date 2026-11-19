@@ -29,8 +29,12 @@ const t = useTranslations(lang);
             <div class="term-body">
               <div class="tln"><span class="pr">$</span> whoami</div>
               <div class="tln out">{t('term.whoami.out')}</div>
+              <div class="tln sp"><span class="pr">$</span> uptime</div>
+              <div class="tln out">{t('term.uptime.out')}</div>
               <div class="tln sp"><span class="pr">$</span> cat stack.txt</div>
               <div class="tln out">{t('term.stack.out')}</div>
+              <div class="tln sp"><span class="pr">$</span> pwd</div>
+              <div class="tln out">~/czech-republic/prague</div>
               <div class="tln sp"><span class="pr">$</span> {t('term.why')}</div>
               <div class="tln term-menu" role="group" aria-label={t('term.menu.aria')}>
                 <button type="button" class="tmi" data-k="hire" aria-pressed="false"><span class="tk">[1]</span> {t('term.menu.hire')}</button>
@@ -50,27 +54,101 @@ const t = useTranslations(lang);
           <h2 id="arc-h">{t('arc.h')}</h2>
           <p class="sec-lede">{t('arc.lede')}</p>
           <div class="gitlog">
-            <p class="gl-cmd"><span class="pr">$</span> git log --oneline --graph career/</p>
+            <p class="gl-cmd"><span class="pr">$</span> git log --graph --oneline --all career/</p>
             <ol class="gl-list">
-              <li class="gl-commit">
-                <span class="gl-graph" aria-hidden="true">*</span>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v down" style="--x:9px;--c:#2743d6"></i>
+                  <i class="gl-dot" style="--x:9px;--c:#2743d6"></i>
+                </span>
                 <div class="gl-main">
-                  <p class="gl-head"><span class="gl-hash">7c3e1a2</span> <span class="gl-ref">(front-end)</span> <span class="gl-msg">{t('arc.c1.msg')}</span></p>
+                  <p class="gl-head"><span class="gl-hash">9c0e2a2</span> <span class="gl-ref">(2002)</span> <span class="gl-msg">{t('arc.c1.msg')}</span></p>
                   <p class="gl-body">{t('arc.c1.body')}</p>
                 </div>
               </li>
-              <li class="gl-commit">
-                <span class="gl-graph" aria-hidden="true">*</span>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <svg class="gl-diag" viewBox="0 0 46 11" preserveAspectRatio="none"><line x1="9" y1="0" x2="29" y2="11" stroke="#b4791a" stroke-width="2"/></svg>
+                  <i class="gl-v down" style="--x:29px;--c:#b4791a"></i>
+                  <i class="gl-dot" style="--x:29px;--c:#b4791a"></i>
+                </span>
                 <div class="gl-main">
-                  <p class="gl-head"><span class="gl-hash">b4d9f08</span> <span class="gl-ref">(node.js)</span> <span class="gl-msg">{t('arc.c2.msg')}</span></p>
+                  <p class="gl-head"><span class="gl-hash">3f6b1d0</span> <span class="gl-ref gl-ref-mat">(2006 · materials-eng)</span> <span class="gl-msg">{t('arc.c2.msg')}</span></p>
                   <p class="gl-body">{t('arc.c2.body')}</p>
                 </div>
               </li>
-              <li class="gl-commit">
-                <span class="gl-graph" aria-hidden="true">*</span>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <i class="gl-v full" style="--x:29px;--c:#b4791a"></i>
+                  <i class="gl-dot" style="--x:29px;--c:#b4791a"></i>
+                </span>
                 <div class="gl-main">
-                  <p class="gl-head"><span class="gl-hash">e2a0c5d</span> <span class="gl-ref gl-ref-head">(HEAD → main, ai-architecture)</span> <span class="gl-msg">{t('arc.c3.msg')}</span></p>
+                  <p class="gl-head"><span class="gl-hash">a4e7b21</span> <span class="gl-msg">{t('arc.c3.msg')}</span></p>
                   <p class="gl-body">{t('arc.c3.body')}</p>
+                </div>
+              </li>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <svg class="gl-diag" viewBox="0 0 46 11" preserveAspectRatio="none"><line x1="29" y1="0" x2="9" y2="11" stroke="#b4791a" stroke-width="2"/></svg>
+                  <i class="gl-dot gl-merge" style="--x:9px;--c:#2743d6"></i>
+                </span>
+                <div class="gl-main">
+                  <p class="gl-head"><span class="gl-hash">b7a4c58</span> <span class="gl-ref">(2012)</span> <span class="gl-msg">{t('arc.c4.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c4.body')}</p>
+                </div>
+              </li>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <i class="gl-dot" style="--x:9px;--c:#2743d6"></i>
+                </span>
+                <div class="gl-main">
+                  <p class="gl-head"><span class="gl-hash">c19d2e0</span> <span class="gl-ref">(2014 · MSU)</span> <span class="gl-msg">{t('arc.c5.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c5.body')}</p>
+                </div>
+              </li>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <i class="gl-dot" style="--x:9px;--c:#2743d6"></i>
+                </span>
+                <div class="gl-main">
+                  <p class="gl-head"><span class="gl-hash">e21d9f3</span> <span class="gl-ref">(2015 · yandex)</span> <span class="gl-msg">{t('arc.c6.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c6.body')}</p>
+                </div>
+              </li>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <i class="gl-dot" style="--x:9px;--c:#2743d6"></i>
+                </span>
+                <div class="gl-main">
+                  <p class="gl-head"><span class="gl-hash">4a8c0b6</span> <span class="gl-ref">(2016 · prague)</span> <span class="gl-msg">{t('arc.c7.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c7.body')}</p>
+                </div>
+              </li>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v full" style="--x:9px;--c:#2743d6"></i>
+                  <i class="gl-dot head" style="--x:9px;--c:#2743d6"></i>
+                </span>
+                <div class="gl-main">
+                  <p class="gl-head"><span class="gl-hash">d5e3f17</span> <span class="gl-ref gl-ref-head">(2019 · zenoo · HEAD → main)</span> <span class="gl-msg">{t('arc.c8.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c8.body')}</p>
+                </div>
+              </li>
+              <li class="gl-row">
+                <span class="gl-rail" aria-hidden="true">
+                  <svg class="gl-diag" viewBox="0 0 46 11" preserveAspectRatio="none"><line x1="9" y1="0" x2="29" y2="11" stroke="#0b8457" stroke-width="2"/></svg>
+                  <i class="gl-v dangle" style="--x:29px;--c:#0b8457"></i>
+                  <i class="gl-dot" style="--x:29px;--c:#0b8457"></i>
+                </span>
+                <div class="gl-main">
+                  <p class="gl-head"><span class="gl-hash">f0b3a6c</span> <span class="gl-ref gl-ref-side">(side-projects)</span> <span class="gl-msg">{t('arc.c9.msg')}</span></p>
+                  <p class="gl-body">{t('arc.c9.body')}</p>
                 </div>
               </li>
             </ol>
@@ -187,6 +265,9 @@ const t = useTranslations(lang);
   .bface .term-title{margin-left:.5rem;font-size:.72rem;color:#8b93a3;letter-spacing:.02em}
   .bface .term-body{padding:1.1rem 1.15rem;font-size:.84rem;line-height:1.75;color:#c9ced8;overflow-x:auto}
   .bface .term-body .tln{white-space:pre}
+  /* outputs + the printed response wrap instead of scrolling the terminal sideways
+     (higher specificity than the .tln pre rule above, which would otherwise win) */
+  .bface .term-body .tln.out,.bface .term-body .term-out{white-space:pre-wrap;overflow-wrap:break-word}
   .bface .term-body .tln.sp{margin-top:.75rem}
   .bface .term-body .pr{color:#57d08a;font-weight:600;margin-right:.1ch}
   .bface .term-body .out{color:#8b93a3}
@@ -339,14 +420,27 @@ const t = useTranslations(lang);
     background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;padding:clamp(1.3rem,3vw,1.9rem)}
   .bface .gl-cmd{margin:0 0 1.3rem;color:var(--soft)}
   .bface .gl-cmd .pr{color:#0b8457;font-weight:600;margin-right:.4ch}
-  .bface .gl-list{list-style:none;margin:0;padding:0;display:grid;gap:1.2rem}
-  .bface .gl-commit{position:relative;padding-left:1.7rem}
-  .bface .gl-graph{position:absolute;left:.1rem;top:0;color:var(--accent);font-weight:700}
-  .bface .gl-commit:not(:last-child)::before{content:"";position:absolute;left:.42rem;top:1.25rem;bottom:-1.2rem;width:1.5px;background:var(--line)}
+  /* the career git graph — real branch rails, fork/merge diagonals, open nodes */
+  .bface .gl-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  .bface .gl-row{display:grid;grid-template-columns:46px minmax(0,1fr);gap:.55rem;align-items:stretch}
+  .bface .gl-rail{position:relative}           /* grid stretches it to the row's height */
+  .bface .gl-v{position:absolute;width:2px;left:calc(var(--x) - 1px);background:var(--c)}
+  .bface .gl-v.full{top:0;bottom:0}
+  .bface .gl-v.down{top:11px;bottom:0}
+  .bface .gl-v.dangle{top:11px;height:48px;background:linear-gradient(180deg,var(--c),transparent)}
+  .bface .gl-diag{position:absolute;top:0;left:0;width:46px;height:11px;overflow:visible}
+  .bface .gl-dot{position:absolute;top:11px;left:calc(var(--x) - 5px);width:10px;height:10px;border-radius:50%;
+    background:var(--panel);border:2px solid var(--c);transform:translateY(-50%);z-index:2}
+  .bface .gl-dot.gl-merge{background:var(--c)}                         /* filled = a merge lands here */
+  .bface .gl-dot.head{background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent)}
+  .bface .gl-main{padding-bottom:1.3rem}
+  .bface .gl-row:last-child .gl-main{padding-bottom:0}
   .bface .gl-head{margin:0}
   .bface .gl-hash{color:var(--faint)}
   .bface .gl-ref{color:var(--accent)}
   .bface .gl-ref-head{color:#0b8457}
+  .bface .gl-ref-mat{color:#b4791a}
+  .bface .gl-ref-side{color:#0b8457}
   .bface .gl-msg{color:var(--ink);font-weight:600}
   .bface .gl-body{margin:.4rem 0 0;color:var(--soft);line-height:1.6;max-width:62ch}
 

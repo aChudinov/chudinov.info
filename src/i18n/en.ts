@@ -30,32 +30,51 @@ export const en = {
   'term.aria': 'Interactive terminal',
   'term.title': 'alexey@chudinov — zsh',
   'term.whoami.out': 'alexey chudinov — ai architect',
-  'term.stack.out': 'front-end → node.js → ai systems',
+  'term.uptime.out': 'up since 2002 — building for the web',
+  'term.stack.out': 'front-end, node.js → full-stack → architect → ai systems',
   'term.why': 'why are you here?',
   'term.menu.aria': 'Why are you here? Pick one.',
   'term.menu.hire': 'hire',
   'term.menu.collab': 'collab',
   'term.menu.curious': 'curious',
   'term.menu.banjo': 'banjo',
-  'term.resp.hire': 'open to the right role — say hello below ↓',
+  'term.resp.hire': 'not job-hunting right now — but always up for a good conversation ↓',
   'term.resp.collab': 'love a good problem — the form is just below ↓',
   'term.resp.curious': 'make yourself at home. scroll on ↓',
   'term.resp.banjo': 'wrong soul — hit MUSIC, top-right ♪',
 
   // ---- builder · the arc ----
   'arc.label': 'The arc',
-  'arc.h': 'One career, built downward through the stack.',
+  'arc.h': 'One career, committed since 2002.',
   'arc.lede':
-    "Each layer taught the next. I didn't jump into AI from the outside — I grew into it from the interface down.",
-  'arc.c1.msg': 'the interface',
+    'Not a straight line — it branches and merges. The web, a detour through materials engineering and research, back to the web, and now AI. Every step still compiles into what I build today.',
+  'arc.c1.msg': 'first contact — html & javascript',
   'arc.c1.body':
-    'Years shipping accessible, fast product UI — systems get judged at the edge a person actually touches.',
-  'arc.c2.msg': 'the backend',
+    'Taught myself the web as it existed then — view-source, tables, inline scripts. The spark that never went out.',
+  'arc.c2.msg': 'materials engineering at BMSTU',
   'arc.c2.body':
-    'Grew into Node and services — APIs, queues, data flow. Learned how state, latency and failure really behave under load.',
-  'arc.c3.msg': 'the whole machine',
+    'Branched off into materials engineering at Bauman Moscow State Technical University — a full detour away from code.',
+  'arc.c3.msg': 'senior research engineer · a patent',
   'arc.c3.body':
-    'Now I design AI systems end to end — agents, retrieval, pipelines and evals, with guardrails wired in, not bolted on.',
+    'Worked as a senior research engineer and earned a patent. Years of thinking in systems, proofs and tolerances.',
+  'arc.c4.msg': 'merge: back to the web',
+  'arc.c4.body':
+    'Merged the detour back in and returned to web development for good — the research years made me a sharper engineer.',
+  'arc.c5.msg': 'second degree — computer science',
+  'arc.c5.body':
+    "Earned a second degree in computer science at Lomonosov Moscow State University — the country's leading university.",
+  'arc.c6.msg': 'engineering at scale',
+  'arc.c6.body':
+    'Front-end at leading companies, Yandex among them. Learned how interfaces behave under real users and real traffic.',
+  'arc.c7.msg': 'new country, higher stakes',
+  'arc.c7.body':
+    'Moved to the Czech Republic and built in fintech — where correctness, latency and trust are not optional.',
+  'arc.c8.msg': 'leading ai development',
+  'arc.c8.body':
+    'Now I lead AI development at Zenoo — agents, retrieval, pipelines and the guardrails around them.',
+  'arc.c9.msg': 'projects of my own',
+  'arc.c9.body':
+    'A branch that never merges: several side projects I keep running in my own time — always something building.',
 
   // ---- builder · the machine ----
   'machine.label': 'The machine',
