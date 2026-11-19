@@ -107,6 +107,60 @@ const mf = {
   .mface .mf-stat-unit{font-family:var(--mf-mono);font-size:1.05rem;color:var(--mf-accent-deep)}
   .mface .mf-stat-label{margin:1rem 0 0;font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--mf-on-paper-soft);max-width:40ch}
 
+  /* intro: stage photo framed like a window (rhymes with the IT code windows, warmed) */
+  .mface .mf-photo{margin:1.8rem 0 0;max-width:520px;border:1px solid var(--mf-paper-line);border-radius:11px;
+    overflow:hidden;background:var(--mf-paper-2);box-shadow:0 28px 50px -34px rgba(20,18,16,.5)}
+  .mface .mf-photo-bar{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;background:var(--mf-paper);border-bottom:1px solid var(--mf-paper-line)}
+  .mface .mf-photo-bar .mf-pd{width:10px;height:10px;border-radius:50%;background:var(--mf-paper-line)}
+  .mface .mf-photo-bar .mf-pd:nth-child(1){background:#d98a1f}
+  .mface .mf-photo-bar .mf-pd:nth-child(2){background:#caa24a}
+  .mface .mf-photo-bar .mf-pd:nth-child(3){background:#9ab06a}
+  .mface .mf-photo-name{margin-left:.4rem;font-family:var(--mf-mono);font-size:.72rem;color:var(--mf-on-paper-soft)}
+  .mface .mf-photo-img{display:block;width:100%;height:auto}
+  .mface .mf-photo-cap{margin:0;padding:.7rem .85rem;font-family:var(--mf-mono);font-size:.76rem;
+    color:var(--mf-on-paper-soft);background:var(--mf-paper);border-top:1px solid var(--mf-paper-line)}
+  .mface .mf-photo-cap::before{content:"\266A  ";color:var(--mf-accent-ink)}
+
+  /* fact: history timeline — a banjo "string" rail with amber fret-marker nodes */
+  .mface .mf-timeline{list-style:none;margin:0;padding:0}
+  .mface .mf-tl{position:relative;display:grid;grid-template-columns:20px minmax(0,1fr);gap:.95rem;padding-bottom:1.5rem}
+  .mface .mf-tl:last-child{padding-bottom:0}
+  .mface .mf-tl::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:2px;background:#5b5446;opacity:.4}
+  .mface .mf-tl:first-child::before{top:9px}
+  .mface .mf-tl:last-child::before{bottom:auto;height:9px}
+  .mface .mf-tl-node{width:12px;height:12px;margin-top:3px;border-radius:50%;background:var(--mf-accent);
+    border:2.5px solid var(--mf-paper);position:relative;z-index:1}
+  .mface .mf-tl-when{display:inline-block;font-family:var(--mf-mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--mf-accent-deep)}
+  .mface .mf-tl-text{margin:.3rem 0 0;color:var(--mf-on-paper);line-height:1.55;max-width:46ch}
+  .mface .mf-tl-hint{margin:.55rem 0 0;font-family:var(--mf-mono);font-size:.76rem;color:var(--mf-on-paper-soft)}
+
+  /* generic body paragraph for the content facts */
+  .mface .mf-ptext{margin:0;color:var(--mf-on-paper);line-height:1.6;max-width:52ch;font-size:clamp(1.02rem,1.4vw,1.18rem)}
+
+  /* family: two video slots (framed like the photo window; posters until clips land) */
+  .mface .mf-vids{display:grid;gap:1.1rem;margin:1.6rem 0 0}
+  @media(min-width:620px){.mface .mf-vids{grid-template-columns:1fr 1fr}}
+  .mface .mf-vid{border:1px solid var(--mf-paper-line);border-radius:11px;overflow:hidden;background:var(--mf-paper-2);box-shadow:0 20px 40px -32px rgba(20,18,16,.5)}
+  .mface .mf-vid-stage{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#2a2622,#1b1712);display:grid;place-items:center}
+  .mface .mf-play{width:46px;height:46px;border-radius:50%;background:rgba(243,241,234,.92);display:grid;place-items:center}
+  .mface .mf-play::before{content:"";border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent #1b1712;margin-left:3px}
+  .mface .mf-vid-soon{position:absolute;top:.6rem;right:.6rem;font-family:var(--mf-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mf-on-ink);background:rgba(20,18,16,.5);padding:.2rem .5rem;border-radius:999px}
+  .mface .mf-vid-cap{margin:0;padding:.65rem .8rem;font-family:var(--mf-mono);font-size:.74rem;color:var(--mf-on-paper-soft);background:var(--mf-paper);border-top:1px solid var(--mf-paper-line)}
+
+  /* the scene: memory-box card grid */
+  .mface .mf-mem{display:grid;gap:.9rem;margin:1.5rem 0 0}
+  @media(min-width:560px){.mface .mf-mem{grid-template-columns:1fr 1fr}}
+  .mface .mf-mem-card{padding:1.1rem 1.2rem;background:var(--mf-paper-2);border:1px solid var(--mf-paper-line);border-radius:10px;transition:border-color .2s ease,transform .2s var(--mf-ease)}
+  .mface .mf-mem-card:hover{border-color:var(--mf-accent);transform:translateY(-2px)}
+  .mface .mf-mem-tag{margin:0;font-family:var(--mf-mono);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mf-accent-ink)}
+  .mface .mf-mem-txt{margin:.35rem 0 0;color:var(--mf-on-paper-soft);font-size:.95rem;line-height:1.5}
+  .mface .mf-soon{margin:1.1rem 0 0;font-family:var(--mf-mono);font-size:.76rem;color:var(--mf-on-paper-soft)}
+
+  /* dystonia link + left-handed intro */
+  .mface .mf-dys-link{margin:1.2rem 0 0;font-family:var(--mf-mono);font-size:.82rem;color:var(--mf-accent-ink)}
+  .mface .mf-lh-intro{margin:0 0 1.4rem;font-size:clamp(1.02rem,1.4vw,1.18rem);line-height:1.6;color:var(--mf-on-paper);max-width:54ch}
+
   /* fact: progress */
   .mface .mf-bar2{height:12px;background:var(--mf-paper-2);border:1px solid var(--mf-paper-line);border-radius:999px;overflow:hidden;max-width:440px}
   .mface .mf-bar2-fill{height:100%;background:var(--mf-accent);border-radius:999px}
@@ -186,29 +240,54 @@ const mf = {
 
     <!-- FACT STAGE -->
     <div class="mf-stage" aria-live="polite">
-      <!-- default: generic intro -->
+      <!-- default: generic intro + stage photo (framed like the IT code windows) -->
       <div class="mf-fp mf-fp-intro" data-k="default">
         <p class="mf-lede" set:html={t('music.intro')}></p>
+        <figure class="mf-photo">
+          <div class="mf-photo-bar" aria-hidden="true"><span class="mf-pd"></span><span class="mf-pd"></span><span class="mf-pd"></span><span class="mf-photo-name">live.jpg</span></div>
+          <picture>
+            <source srcset="/img/alexey-live.webp" type="image/webp" />
+            <img class="mf-photo-img" src="/img/alexey-live.jpg" width="1500" height="1000" loading="lazy" decoding="async"
+              alt="Alexey Chudinov playing the five-string banjo on stage under blue and red lights." />
+          </picture>
+          <figcaption class="mf-photo-cap">{t('music.intro.caption')}</figcaption>
+        </figure>
         <p class="mf-hint">{t('music.intro.hint')}</p>
       </div>
 
-      <!-- k=0 · the count (stat) [PLACEHOLDER] -->
+      <!-- k=0 · history (timeline on a banjo "string" with fret-marker nodes) -->
       <div class="mf-fp" data-k="0" hidden>
         <p class="mf-fp-h">{t('music.fact0.h')}</p>
-        <div class="mf-stat"><span class="mf-stat-num">100%</span><span class="mf-stat-unit">{t('music.fact0.unit')}</span></div>
-        <p class="mf-stat-label">{t('music.fact0.label')}</p>
+        <ol class="mf-timeline">
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w1')}</span><p class="mf-tl-text">{t('music.hist.t1')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w2')}</span><p class="mf-tl-text">{t('music.hist.t2')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w3')}</span><p class="mf-tl-text">{t('music.hist.t3')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w4')}</span><p class="mf-tl-text">{t('music.hist.t4')}</p></div></li>
+          <li class="mf-tl"><span class="mf-tl-node" aria-hidden="true"></span><div class="mf-tl-body"><span class="mf-tl-when">{t('music.hist.w5')}</span><p class="mf-tl-text">{t('music.hist.t5')}</p><p class="mf-tl-hint">{t('music.hist.hint')}</p></div></li>
+        </ol>
       </div>
 
-      <!-- k=1 · progress (bar) [PLACEHOLDER] -->
+      <!-- string 2 · family (data-k=1) — musical roots + video slots -->
       <div class="mf-fp" data-k="1" hidden>
         <p class="mf-fp-h">{t('music.fact1.h')}</p>
-        <div class="mf-bar2"><div class="mf-bar2-fill" style="width:64%"></div></div>
-        <p class="mf-fp-sub">{t('music.fact1.sub')}</p>
+        <p class="mf-ptext">{t('music.family.body')}</p>
+        <div class="mf-vids">
+          <figure class="mf-vid">
+            <div class="mf-vid-stage"><span class="mf-vid-soon">{t('music.family.soon')}</span><span class="mf-play" aria-hidden="true"></span></div>
+            <figcaption class="mf-vid-cap">{t('music.family.v1')}</figcaption>
+          </figure>
+          <figure class="mf-vid">
+            <div class="mf-vid-stage"><span class="mf-vid-soon">{t('music.family.soon')}</span><span class="mf-play" aria-hidden="true"></span></div>
+            <figcaption class="mf-vid-cap">{t('music.family.v2')}</figcaption>
+          </figure>
+        </div>
       </div>
 
-      <!-- k=2 · the neck (tablature + fretboard) -->
-      <div class="mf-fp" data-k="2" hidden>
-        <p class="mf-fp-h">{t('music.fact2.h')}</p>
+      <!-- string 5 · left-handed journey (data-k=4) — the tab + fretboard live here now.
+           NOTE: inner labels still use the music.fact2.* keys (identifiers only). -->
+      <div class="mf-fp" data-k="4" hidden>
+        <p class="mf-fp-h">{t('music.fact4.h')}</p>
+        <p class="mf-lh-intro">{t('music.lh.intro')}</p>
         <div class="mf-score">
           <div class="mf-panel">
             <div class="mf-bar"><span class="mf-pl">{t('music.fact2.tab.label')}</span><span class="mf-pt">{t('music.fact2.tab.tag')}</span></div>
@@ -306,26 +385,24 @@ const mf = {
         </div>
       </div>
 
-      <!-- k=3 · right now (terminal) [PLACEHOLDER] -->
+      <!-- string 4 · dystonia (data-k=3) -->
       <div class="mf-fp" data-k="3" hidden>
         <p class="mf-fp-h">{t('music.fact3.h')}</p>
-        <div class="mf-term">
-          <div><span class="mf-pr">$</span> {t('music.fact3.line1')}</div>
-          <div>{t('music.fact3.line2')}</div>
-          <div><span class="mf-dim"># {t('music.fact3.line3')}</span></div>
-        </div>
+        <p class="mf-ptext">{t('music.dystonia.body')}</p>
+        <p class="mf-dys-link">{t('music.dystonia.link')}</p>
       </div>
 
-      <!-- k=4 · influences (tags) [PLACEHOLDER] -->
-      <div class="mf-fp" data-k="4" hidden>
-        <p class="mf-fp-h">{t('music.fact4.h')}</p>
-        <div class="mf-tags">
-          <span class="mf-chip">{t('music.fact4.chip1')}</span>
-          <span class="mf-chip">{t('music.fact4.chip2')}</span>
-          <span class="mf-chip">{t('music.fact4.chip3')}</span>
-          <span class="mf-chip">{t('music.fact4.chip4')}</span>
-          <span class="mf-chip">{t('music.fact4.chip5')}</span>
+      <!-- string 3 · the scene / memory box (data-k=2) — bands, festivals, camps, projects -->
+      <div class="mf-fp" data-k="2" hidden>
+        <p class="mf-fp-h">{t('music.fact2.h')}</p>
+        <p class="mf-ptext">{t('music.scene.body')}</p>
+        <div class="mf-mem">
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c1t')}</p><p class="mf-mem-txt">{t('music.scene.c1b')}</p></div>
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c2t')}</p><p class="mf-mem-txt">{t('music.scene.c2b')}</p></div>
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c3t')}</p><p class="mf-mem-txt">{t('music.scene.c3b')}</p></div>
+          <div class="mf-mem-card"><p class="mf-mem-tag">{t('music.scene.c4t')}</p><p class="mf-mem-txt">{t('music.scene.c4b')}</p></div>
         </div>
+        <p class="mf-soon">{t('music.scene.soon')}</p>
       </div>
     </div>
     </div><!-- /mf-body -->

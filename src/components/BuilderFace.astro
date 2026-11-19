@@ -142,6 +142,7 @@ const t = useTranslations(lang);
               </li>
               <li class="gl-row">
                 <span class="gl-rail" aria-hidden="true">
+                  <i class="gl-v dangle-top" style="--x:9px;--c:#2743d6"></i>
                   <svg class="gl-diag" viewBox="0 0 46 11" preserveAspectRatio="none"><line x1="9" y1="0" x2="29" y2="11" stroke="#0b8457" stroke-width="2"/></svg>
                   <i class="gl-v dangle" style="--x:29px;--c:#0b8457"></i>
                   <i class="gl-dot" style="--x:29px;--c:#0b8457"></i>
@@ -427,7 +428,8 @@ const t = useTranslations(lang);
   .bface .gl-v{position:absolute;width:2px;left:calc(var(--x) - 1px);background:var(--c)}
   .bface .gl-v.full{top:0;bottom:0}
   .bface .gl-v.down{top:11px;bottom:0}
-  .bface .gl-v.dangle{top:11px;height:48px;background:linear-gradient(180deg,var(--c),transparent)}
+  .bface .gl-v.dangle{top:11px;height:49px;background:linear-gradient(180deg,var(--c),transparent)}
+  .bface .gl-v.dangle-top{top:0;height:60px;background:linear-gradient(180deg,var(--c) 45%,transparent)} /* main carries on */
   .bface .gl-diag{position:absolute;top:0;left:0;width:46px;height:11px;overflow:visible}
   .bface .gl-dot{position:absolute;top:11px;left:calc(var(--x) - 5px);width:10px;height:10px;border-radius:50%;
     background:var(--panel);border:2px solid var(--c);transform:translateY(-50%);z-index:2}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Alexey Chudinov — a two-sided card">
+  <defs>
+    <clipPath id="card"><rect x="1.5" y="1.5" width="29" height="29" rx="8"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <!-- two souls: IT (blueprint blue) + music (warm amber) -->
+    <rect x="1.5" y="1.5" width="14.5" height="29" fill="#2743d6"/>
+    <rect x="16" y="1.5" width="14.5" height="29" fill="#d98a1f"/>
+  </g>
+  <!-- the flip-switch knob, straddling the seam -->
+  <circle cx="16" cy="16" r="4.7" fill="#f3f1ea"/>
+</svg>
