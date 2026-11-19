@@ -161,7 +161,7 @@ export const cs = {
   'music.fact2.fb.right': 'Pravá',
   'music.fact2.fb.left': 'Levá',
   'music.fact2.fb.aria':
-    'Schéma krku pětistrunného banja. Čtyři dlouhé struny vedou po celé délce krku; krátká pátá struna začíná na pátém pražci. Jeden prst je na druhém pražci struny G; ostatní struny zní naprázdno. Schéma se zrcadlí mezi pravou a levou rukou.',
+    'Schéma krku pětistrunného banja s akordem F dur: první struna třetí pražec, druhá první, třetí druhý, čtvrtá třetí; krátká pátá struna začíná na pátém pražci a zní naprázdno. Schéma se zrcadlí mezi pravou a levou rukou.',
   'music.fact2.caption.left':
     '<b>Levou rukou</b> — jak hraju teď. Přepni a uvidíš, kde jsem začínal.',
   'music.fact2.caption.right':

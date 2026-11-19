@@ -225,6 +225,9 @@ const mf = {
   .mface .mf-inlay{fill:var(--mf-on-paper-soft);opacity:.5}
   .mface .mf-open-mark{fill:none;stroke:var(--mf-on-paper);stroke-width:1.5}
   .mface .mf-finger{fill:var(--mf-accent)}
+  .mface .mf-fingnum{font-family:var(--mf-mono);font-size:13px;font-weight:700;fill:#fff;text-anchor:middle}
+  /* keep finger numbers readable when the neck is mirrored for left-handed */
+  .mface .mf-fret.mf-left .mf-fingnum{transform:scaleX(-1);transform-box:fill-box;transform-origin:center}
   .mface .mf-peg{fill:var(--mf-accent-ink)}
   .mface .mf-neckgroup{transform-box:view-box;transform-origin:center;transition:transform .6s var(--mf-ease)}
   .mface .mf-fret.mf-left .mf-neckgroup{transform:scaleX(-1)}
@@ -377,34 +380,38 @@ const mf = {
             <svg class="mf-fret mf-left mf-fretboard" viewBox="0 0 680 230" role="img"
               aria-label={t('music.fact2.fb.aria')}>
               <g class="mf-neckgroup">
-                <rect class="mf-neck" x="80" y="40" width="552" height="150" rx="4"/>
-                <rect class="mf-nut" x="76" y="38" width="8" height="154" rx="2"/>
-                <line class="mf-fretline" x1="159" y1="40" x2="159" y2="190"/>
-                <line class="mf-fretline" x1="238" y1="40" x2="238" y2="190"/>
-                <line class="mf-fretline" x1="317" y1="40" x2="317" y2="190"/>
-                <line class="mf-fretline" x1="396" y1="40" x2="396" y2="190"/>
-                <line class="mf-fretline" x1="475" y1="40" x2="475" y2="190"/>
-                <line class="mf-fretline" x1="554" y1="40" x2="554" y2="190"/>
-                <line class="mf-fretline" x1="632" y1="40" x2="632" y2="190"/>
-                <circle class="mf-inlay" cx="277" cy="115" r="6"/>
-                <circle class="mf-inlay" cx="593" cy="115" r="6"/>
-                <line class="mf-string" x1="84" y1="58"  x2="632" y2="58"/>
-                <line class="mf-string" x1="84" y1="92"  x2="632" y2="92"/>
-                <line class="mf-string" x1="84" y1="126" x2="632" y2="126"/>
-                <line class="mf-string mf-wound" x1="84" y1="160" x2="632" y2="160"/>
-                <line class="mf-string" x1="475" y1="178" x2="632" y2="178"/>
-                <circle class="mf-peg" cx="475" cy="178" r="5"/>
-                <circle class="mf-open-mark" cx="68" cy="58"  r="5"/>
-                <circle class="mf-open-mark" cx="68" cy="92"  r="5"/>
-                <circle class="mf-open-mark" cx="68" cy="160" r="5"/>
-                <circle class="mf-finger" cx="198" cy="126" r="11"/>
+                <rect class="mf-neck" x="80" y="42" width="560" height="168" rx="4"/>
+                <rect class="mf-nut" x="75" y="40" width="9" height="172" rx="2"/>
+                <line class="mf-fretline" x1="159" y1="46" x2="159" y2="206"/>
+                <line class="mf-fretline" x1="238" y1="46" x2="238" y2="206"/>
+                <line class="mf-fretline" x1="317" y1="46" x2="317" y2="206"/>
+                <line class="mf-fretline" x1="396" y1="46" x2="396" y2="206"/>
+                <line class="mf-fretline" x1="475" y1="46" x2="475" y2="206"/>
+                <line class="mf-fretline" x1="554" y1="46" x2="554" y2="206"/>
+                <!-- strings: even spacing (36u), per-string gauges from the banjo menu -->
+                <line class="mf-string" x1="80" y1="54"  x2="640" y2="54"  style="stroke-width:1.3"/>
+                <line class="mf-string" x1="80" y1="90"  x2="640" y2="90"  style="stroke-width:2"/>
+                <line class="mf-string" x1="80" y1="126" x2="640" y2="126" style="stroke-width:2.8"/>
+                <line class="mf-string" x1="80" y1="162" x2="640" y2="162" style="stroke-width:4"/>
+                <line class="mf-string" x1="475" y1="198" x2="640" y2="198" style="stroke-width:1.3"/>
+                <!-- open strings: hollow circle at the string's nut (5th string starts at fret 5) -->
+                <circle class="mf-open-mark" cx="475" cy="198" r="6.5"/>
+                <!-- F major: 1st→3, 2nd→1, 3rd→2, 4th→3 (fingers 4/1/2/3) -->
+                <circle class="mf-finger" cx="277" cy="54"  r="12.5"/>
+                <circle class="mf-finger" cx="120" cy="90"  r="12.5"/>
+                <circle class="mf-finger" cx="198" cy="126" r="12.5"/>
+                <circle class="mf-finger" cx="277" cy="162" r="12.5"/>
+                <text class="mf-fingnum" x="277" y="54"  dy="0.34em">4</text>
+                <text class="mf-fingnum" x="120" y="90"  dy="0.34em">1</text>
+                <text class="mf-fingnum" x="198" y="126" dy="0.34em">2</text>
+                <text class="mf-fingnum" x="277" y="162" dy="0.34em">3</text>
               </g>
               <g aria-hidden="true">
-                <text class="mf-fname-side" x="40" y="62"  text-anchor="middle">D</text>
-                <text class="mf-fname-side" x="40" y="96"  text-anchor="middle">B</text>
+                <text class="mf-fname-side" x="40" y="58"  text-anchor="middle">D</text>
+                <text class="mf-fname-side" x="40" y="94"  text-anchor="middle">B</text>
                 <text class="mf-fname-side" x="40" y="130" text-anchor="middle">G</text>
-                <text class="mf-fname-side" x="40" y="164" text-anchor="middle">D</text>
-                <text class="mf-fname-side" x="40" y="206" text-anchor="middle">g</text>
+                <text class="mf-fname-side" x="40" y="166" text-anchor="middle">D</text>
+                <text class="mf-fname-side" x="40" y="202" text-anchor="middle">g</text>
               </g>
             </svg>
             <p class="mf-fbcaption" set:html={t('music.fact2.caption.left')}></p>

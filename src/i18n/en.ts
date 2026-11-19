@@ -160,7 +160,7 @@ export const en = {
   'music.fact2.fb.right': 'Right',
   'music.fact2.fb.left': 'Left',
   'music.fact2.fb.aria':
-    'A five-string banjo neck diagram. Four long strings run the length of the neck; the short fifth string begins at the fifth fret. One finger is at the second fret of the G string; the other strings ring open. The diagram mirrors between right- and left-handed.',
+    'A five-string banjo neck diagram showing an F major chord: first string third fret, second string first fret, third string second fret, fourth string third fret; the short fifth string begins at the fifth fret and rings open. The diagram mirrors between right- and left-handed.',
   'music.fact2.caption.left':
     '<b>Left-handed</b> — how I play now. Flip it to see where I started.',
   'music.fact2.caption.right':
