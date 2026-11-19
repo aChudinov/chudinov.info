@@ -22,8 +22,8 @@ html{scroll-padding-top:var(--topbar-h)}
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(21,23,28,.07);color:#565d6b;
 }
-.topbar .wrap{max-width:1080px;margin-inline:auto;width:100%;
-  padding:.85rem clamp(1.25rem,5vw,3.5rem);
+.topbar .wrap{max-width:1308px;margin-inline:auto;width:100%;
+  padding:.85rem clamp(1.5rem,5vw,4rem);
   display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .topbar .brand{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:.78rem;letter-spacing:.04em}
 .topbar .brand b{font-weight:600;color:#15171c;transition:color .5s ease}
