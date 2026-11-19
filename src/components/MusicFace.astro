@@ -381,7 +381,8 @@ const mf = {
             <svg class="mf-fret mf-left mf-fretboard" viewBox="0 0 680 230" role="img"
               aria-label={t('music.fact2.fb.aria')}>
               <g class="mf-neckgroup">
-                <rect class="mf-neck" x="80" y="42" width="560" height="168" rx="4"/>
+                <!-- stepped fretboard: 4 strings tall up to fret 5, then widens for the 5th string -->
+                <path class="mf-neck" d="M 80 42 L 640 42 L 640 210 L 475 210 L 475 180 L 80 180 Z"/>
                 <!-- main nut + frets 1-4 only span the four long strings; the 5th-string
                      lane only exists from fret 5 on, so those frets run full-length -->
                 <rect class="mf-nut" x="75" y="40" width="9" height="132" rx="2"/>
